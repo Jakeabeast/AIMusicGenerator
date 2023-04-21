@@ -27,7 +27,7 @@ class MusicCreator:
 
         print("{ ", end=" ")
 
-        while (remainingSong > 0):
+        while remainingSong > 0:
             note = self.random_note()
             noteLength = random.choices([4,2,1], weights=(14,28,58)) # 1 = whole, 2 = half, 4 = quarter
             noteLength = noteLength[0]
@@ -45,7 +45,7 @@ class MusicCreator:
                 if (remainingBar <= 0):
                     remainingBar = self.timeSignature[1]
 
-            remainingSong-=noteLength
+            remainingSong -= noteLength
         #print(self.durationList) #to view list in terminal
             
         print("} ", end=" ") 
@@ -56,6 +56,11 @@ if __name__ == "__main__":
 
     test = MusicCreator(BARS)
     test.print_musical_list()
+
+    # 1. generate music usign my internal data structure
+    # 2. make structure compatible for lillypond
+    # 3.a save lilypond version as text string
+    # 3.b p
 
 
 
