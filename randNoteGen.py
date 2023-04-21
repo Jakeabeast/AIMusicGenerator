@@ -32,9 +32,9 @@ class MusicCreator:
             noteLength = random.choices([4,2,1], weights=(14,28,58)) # 1 = whole, 2 = half, 4 = quarter
             noteLength = noteLength[0]
 
-            if (noteLength > remainingSong): #does it fit at the end of bar
+            if noteLength > remainingSong: #does it fit at the end of bar
                 continue
-            elif (noteLength > remainingBar): #note needs to beam over bar (spagetti for now)
+            elif noteLength > remainingBar: #note needs to beam over bar (spagetti for now)
                 print(self.convert_for_lilypond(note, remainingBar) + "~ " 
                       + self.convert_for_lilypond(note, noteLength - remainingBar), end="  ")
                 remainingBar = self.timeSignature[1] - (noteLength - remainingBar)
@@ -42,7 +42,7 @@ class MusicCreator:
                 
                 print(self.convert_for_lilypond(note, noteLength), end="  ")          
                 remainingBar -= noteLength
-                if (remainingBar <= 0):
+                if remainingBar <= 0:
                     remainingBar = self.timeSignature[1]
 
             remainingSong -= noteLength
