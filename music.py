@@ -122,7 +122,10 @@ class RawLilypond:
 class EngravedLilypond:
     #constructor 
     def __init__(self, rawLilypond):
-        print(self.text_file(rawLilypond.get_refinedMusic()))
+        #print(self.text_file(rawLilypond.get_refinedMusic()))
+        file = open('testFile', 'w')
+        file.write(self.text_file(rawLilypond.get_refinedMusic()))
+        file.close()
 
     def text_file(self, rawLilypond):
         text = "{ "
