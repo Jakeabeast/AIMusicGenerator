@@ -1,10 +1,13 @@
 # take in raw data and grade it in several different fitness functions
 def all_default_test(rawData):    
     totalTests = 4
-    totalTestValue = note_rest_ratio(rawData)
-    totalTestValue += note_length_ratio(rawData)
-    totalTestValue += contiguous_melody_ratio(rawData)
-    totalTestValue += interval_size_ratio(rawData)
+    try:
+        totalTestValue = note_rest_ratio(rawData)
+        totalTestValue += note_length_ratio(rawData)
+        totalTestValue += contiguous_melody_ratio(rawData)
+        totalTestValue += interval_size_ratio(rawData)
+    except:
+        return -1
 
     return totalTestValue / totalTests
 
@@ -50,6 +53,7 @@ def contiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
     notesArray = rawData.get_notes()
     sectionIdx = 0
     harmonicSections = 0
+    totalSections = 0
     totalNotes = len(notesArray)
     while sectionIdx < totalNotes - 2:
         intervalJump12 = compare_note_interval(notesArray[sectionIdx][0], notesArray[sectionIdx + 1][0])
@@ -57,18 +61,22 @@ def contiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
 
         if intervalJump12 == "rest" or intervalJump23 == "rest":
             pass
+            totalSections -= 1
         #multiply jump, if both are positive or negative (going up or down), result is > 0, hence harmonic
         elif intervalJump12 * intervalJump23 > 0:
             harmonicSections +=1    
 
+        totalSections += 1
         sectionIdx += 1
-
-    inaccuracy = abs(targetHarmonicDecimal - harmonicSections / totalNotes)
-
+    try:
+        inaccuracy = abs(targetHarmonicDecimal - harmonicSections / totalSections)
+    except: 
+        return "0 Sections"
+    
     return 1.0 - inaccuracy
 
 def interval_size_ratio(rawData, targetIntervalDecimal = 0.5, scaleDegree = 2):
-    #interval size default to 80% of scale degree 2 (2 intervals apart)
+    #interval size default to 50% of scale degree 2 (2 intervals apart)
     notesArray = rawData.get_notes()
     noteIdx = 0
     appropriateIntervals = 0

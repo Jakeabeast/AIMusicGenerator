@@ -2,7 +2,9 @@ import random
 
 class UnrefinedMusic:
     #overloaded constructors
-    def __init__ (self, bars = 8, keySignature = ["C", "major"], clef = "treble", timeSignature = [4,4]):
+    def __init__ (self, seed = random.random(), bars = 8, keySignature = ["C", "major"], clef = "treble", timeSignature = [4,4]):
+
+        self.seed = seed
         self.numberOfBars = bars
         self.keySig = keySignature # "C", "major/minor" = Cmajor / Cminor
         self.clef = clef # "treble" / "bass"
@@ -25,12 +27,16 @@ class UnrefinedMusic:
     
     def get_notes(self):
         return self.noteArray
+    
+    def get_seed(self):
+        return self.seed
 
     #methods
     def raw_music(self):
         musicArray = []
         remainingSong = self.numberOfBars * self.timeSig[1] #4 bars in common time makes 4 * 4 = 16 beats
 
+        random.seed(self.seed)
         while remainingSong > 0:
             element = random.choices(("note", "rest"), weights=(80,20))
             element = element[0]
