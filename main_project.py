@@ -6,6 +6,8 @@ def create_file(numMusic, numBars, fileName):
     rawData = music.UnrefinedMusic(bars = numBars)
     FILENAME = fileName + "File.txt"
 
+    delete_file_content(fileName)
+
     file = open(FILENAME, 'a')
     file.write("\\version \"2.24.1\"\n")
     file.write("\header {{ title = \markup \"{0}\" }}\n\n".format(fileName))
@@ -41,13 +43,15 @@ def test_seed(seed):
     print("Fitness Test (Note:Rest)= {0}\n".format(fitness.note_rest_ratio(rawData)))
     print("Fitness Test (Note Length)= {0}\n".format(fitness.note_length_ratio(rawData)))
     print("Fitness Test (Melody)= {0}\n".format(fitness.contiguous_melody_ratio(rawData)))
+    print("Fitness Test (Melody Test) [Allow same pitch x2]= {0}\n".format(fitness.testcontiguous_melody_ratio(rawData)))
     print("Fitness Test (Interval Size)= {0}\n".format(fitness.interval_size_ratio(rawData)))
     print("Fitness Test (Overall)= {0}\n\n\n".format(fitness.all_default_test(rawData)))
 
 
 if __name__ == "__main__":
     
-    #test_seed(seed)
+   create_file(20, 8, "musicDatabase(NoteRestWeighted)")
+   test_seed(0.592682365906712)
 
 
     

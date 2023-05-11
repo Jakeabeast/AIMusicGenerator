@@ -13,40 +13,44 @@ def all_default_test(rawData):
 
 
 def note_rest_ratio(rawData, targetRestDecimal = 0.15):
-    # default to 20% rest amount and 80% note amount
+    # default to 15% rest amount and 85% note amount
     restCount = 0; 
-    total = 0; 
+    totalBeats = rawData.get_numberOfBars() * rawData.get_timeSignature()[1]; 
     for element in rawData.get_notes(): 
         if element[0] == "rest": 
             restCount += 1 
-        total += 1 
 
-    inaccuracy = abs(targetRestDecimal - restCount / total) 
+    inaccuracy = abs(targetRestDecimal - restCount / totalBeats) 
+    scaledInaccuracy = inaccuracy * 2
 
-    return 1.0 - inaccuracy
+    return 1.0 - scaledInaccuracy
 
 def note_length_ratio(rawData, targetWholeNoteDecimal = 0.1, targetHalfNoteDecimal = 0.2, targetQuarterNoteDecimal = 0.7):
     # default to 70% quarter, 20% half, 10% whole
     wholeCount = 0
     halfCount = 0
     quarterCount = 0
-    total = 0
+    totalBeats = 0
     for element in rawData.get_notes():
         if element[2] == "whole":
-            wholeCount += 1
+            wholeCount += 4
+            totalBeats += 4
         elif element[2] == "half":
-            halfCount +=1
+            halfCount +=2
+            totalBeats += 2
         elif element[2] == "quarter":
             quarterCount += 1
+            totalBeats += 1
         else:
             return "ERROR UNKNOWN LENGTH"
-        total += 1
 
-    inaccuracy = abs(targetWholeNoteDecimal - wholeCount / total)
-    inaccuracy += abs(targetHalfNoteDecimal - halfCount / total)
-    inaccuracy += abs(targetQuarterNoteDecimal - quarterCount / total)
 
-    return 1.0 - inaccuracy / 3 #average inaccuracy
+    inaccuracy = abs(targetWholeNoteDecimal - wholeCount / totalBeats) 
+    inaccuracy += abs(targetHalfNoteDecimal - halfCount / totalBeats) 
+    inaccuracy += abs(targetQuarterNoteDecimal - quarterCount / totalBeats) 
+    scaledInaccuracy = inaccuracy * 0.5
+
+    return 1.0 - scaledInaccuracy
 
 def contiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
     #contiguous notes in sections of 3
@@ -64,6 +68,33 @@ def contiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
             totalSections -= 1
         #multiply jump, if both are positive or negative (going up or down), result is > 0, hence harmonic
         elif intervalJump12 * intervalJump23 > 0:
+            harmonicSections +=1    
+
+        totalSections += 1
+        sectionIdx += 1
+    try:
+        inaccuracy = abs(targetHarmonicDecimal - harmonicSections / totalSections)
+    except: 
+        return "0 Sections"
+    
+    return 1.0 - inaccuracy
+
+def testcontiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
+    #contiguous notes in sections of 3
+    notesArray = rawData.get_notes()
+    sectionIdx = 0
+    harmonicSections = 0
+    totalSections = 0
+    totalNotes = len(notesArray)
+    while sectionIdx < totalNotes - 2:
+        intervalJump12 = compare_note_interval(notesArray[sectionIdx][0], notesArray[sectionIdx + 1][0])
+        intervalJump23 = compare_note_interval(notesArray[sectionIdx + 1][0], notesArray[sectionIdx + 2][0])
+
+        if intervalJump12 == "rest" or intervalJump23 == "rest":
+            pass
+            totalSections -= 1
+        #multiply jump, if both are positive or negative (going up or down), result is > 0, hence harmonic
+        elif intervalJump12 * intervalJump23 >= 0 and intervalJump12 + intervalJump23 != 0:
             harmonicSections +=1    
 
         totalSections += 1
