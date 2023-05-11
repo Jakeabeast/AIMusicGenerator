@@ -30,6 +30,10 @@ class UnrefinedMusic:
     
     def get_seed(self):
         return self.seed
+    
+    def set_seed(self, seed):
+        self.seed = seed
+        self.noteArray = self.raw_music()
 
     #methods
     def raw_music(self):
@@ -65,14 +69,14 @@ class UnrefinedMusic:
 
 class Lilypond:
     #contructor
-    def __init__(self, rawData):
+    def __init__(self, rawData, fileName = "test"):
         self.numberOfBars = rawData.get_numberOfBars()
         self.timeSig = rawData.get_timeSignature()
         self.clef = rawData.get_clef()
         self.keySig = rawData.get_keySignature()
         self.refinedNotes = self.refine_music_notes(rawData)
 
-        self.text_file("test")
+        self.text_file(fileName)
 
     #accessors
     def get_refinedMusic(self):
@@ -150,9 +154,9 @@ class Lilypond:
         for i in range(len(self.refinedNotes)):
             text += self.format_notes(self.refinedNotes[i])
 
-        text += "}"
+        text += "}\n"
         
-        file = open('testFile', 'w')
+        file = open(fileName, 'a')
         file.write(text)
         file.close()
 
