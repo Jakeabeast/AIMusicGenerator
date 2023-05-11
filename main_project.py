@@ -35,11 +35,18 @@ def delete_file_content(fileName):
     file_to_delete = open(FILENAME,'w')
     file_to_delete.close()
 
+def test_seed(seed):
+    rawData = music.UnrefinedMusic(seed = seed)
+    music.Lilypond(rawData)
+
 if __name__ == "__main__":
     
-    SEED = random.random() #Put Seed Here to Test
-    rawData = music.UnrefinedMusic(seed = SEED)
-    music.Lilypond(rawData)
+    #test_seed(seed<-HERE)
+
+
+    
+    
+
 
 
     
