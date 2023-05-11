@@ -42,7 +42,7 @@ class UnrefinedMusic:
 
         random.seed(self.seed)
         while remainingSong > 0:
-            element = random.choices(("note", "rest"), weights=(80,20))
+            element = random.choices(("note", "rest"), weights=None)
             element = element[0]
 
             if (element == "rest"):
@@ -56,7 +56,7 @@ class UnrefinedMusic:
                 accidental = "natural" #add different accidentals later
                     
                 while True:
-                    duration = random.choices((["whole",4],["half",2],["quarter",1]), weights=(14,28,58)) 
+                    duration = random.choices((["whole",4],["half",2],["quarter",1]), weights=None) 
                     duration = duration[0]
                     if duration[1] <= remainingSong: 
                         break
@@ -156,7 +156,7 @@ class Lilypond:
 
         text += "}\n"
         
-        file = open(fileName, 'a')
+        file = open(fileName + "File.txt", 'a')
         file.write(text)
         file.close()
 

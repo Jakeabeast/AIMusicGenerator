@@ -2,23 +2,25 @@ import music
 import fitness
 import random
 
-def create_database(numMusic, numBars, Name):
+def create_file(numMusic, numBars, fileName):
     rawData = music.UnrefinedMusic(bars = numBars)
-    FILENAME = Name + "File.txt"
+    FILENAME = fileName + "File.txt"
 
     file = open(FILENAME, 'a')
     file.write("\\version \"2.24.1\"\n")
-    file.write("\header {{ title = \markup \"{0}\" }}\n\n".format(Name))
+    file.write("\header {{ title = \markup \"{0}\" }}\n\n".format(fileName))
     file.close()
 
     for i in range(numMusic):
+
+        rawData.set_seed(random.random())
+
         file = open(FILENAME, 'a')
         file.write("%Music_Exercise_{0} - Seed: {1}\n".format(str(i+1), rawData.get_seed()))
         file.write("\markup \"Music_Exercise_{0}\"\n".format(str(i+1)))
         file.close()
 
-        rawData.set_seed(random.random())
-        music.Lilypond(rawData, FILENAME)
+        music.Lilypond(rawData, fileName)
 
         file = open(FILENAME, 'a')
         file.write("%\Fitness Test (Note:Rest)= {0}\n".format(fitness.note_rest_ratio(rawData)))
@@ -28,16 +30,16 @@ def create_database(numMusic, numBars, Name):
         file.write("%\Fitness Test (Overall)= {0}\n\n\n".format(fitness.all_default_test(rawData)))
         file.close()
 
-def delete_file_content(Name):
-    file_to_delete = open(Name + "File.txt",'w')
+def delete_file_content(fileName):
+    FILENAME = fileName + "File.txt"
+    file_to_delete = open(FILENAME,'w')
     file_to_delete.close()
 
 if __name__ == "__main__":
-
-    NAME =  "musicDatabaseUnweighted"
-    delete_file_content(NAME)
-    create_database(20, 8,NAME)
-
+    
+    SEED = random.random() #Put Seed Here to Test
+    rawData = music.UnrefinedMusic(seed = SEED)
+    music.Lilypond(rawData)
 
 
     
