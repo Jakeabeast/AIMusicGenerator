@@ -12,7 +12,7 @@ def all_default_test(rawData):
     return totalTestValue / totalTests
 
 
-def note_rest_ratio(rawData, targetRestDecimal = 0.2):
+def note_rest_ratio(rawData, targetRestDecimal = 0.15):
     # default to 20% rest amount and 80% note amount
     restCount = 0; 
     total = 0; 
