@@ -1,204 +1,203 @@
 \version "2.24.1"
-\version "2.24.1"
 \header { title = \markup "musicDatabaseUnweighted" }
 
-%Music_Exercise_1 - Seed: 0.8089357400177352
+%Music_Exercise_1 - Seed: 0.3911443468935444
 \markup "Music_Exercise_1"
-{ \time 4/4 \clef treble \key c \major g'1 e'4 d'4 r4 f'4 c'4 r4 a'4 r4 g'1 e'4 d'4 g'2~ g'2 a'4 r4 r4 g'4 g'2 f'4 r4 g'4 b'4 }
-%\Fitness Test (Note:Rest)= 0.9272727272727272
-%\Fitness Test (Note Length)= 0.896969696969697
-%\Fitness Test (Melody)= 0.7999999999999999
-%\Fitness Test (Interval Size)= 0.7222222222222222
-%\Fitness Test (Overall)= 0.8366161616161616
+{ \time 4/4 \clef treble \key c \major c'4 a'4 g'4 d'4~ d'2. a'4~ a'4 c'4 r4 r4 a'4 a'2.~ a'4 r4 r4 g'4~ g'2. b'4~ b'4 e'4 c'4 c'4 f'4 e'4 b'4 f'4 }
+%\Fitness Test (Note:Rest)= 0.9904761904761905
+%\Fitness Test (Note Length)= 0.9301587301587302
+%\Fitness Test (Melody)= 0.38181818181818183
+%\Fitness Test (Interval Size)= 0.9615384615384616
+%\Fitness Test (Overall)= 0.8159978909978911
 
 
-%Music_Exercise_2 - Seed: 0.5312547318406616
+%Music_Exercise_2 - Seed: 0.22906132341564756
 \markup "Music_Exercise_2"
-{ \time 4/4 \clef treble \key c \major e'4 d'2 f'4 r4 f'2 d'4 r4 a'2.~ a'4 e'4 f'2 c'4 r4 g'4 b'4 r4 e'4 r4 d'4~ d'4 a'2.~ a'4 r4 a'2 }
-%\Fitness Test (Note:Rest)= 0.9142857142857144
-%\Fitness Test (Note Length)= 0.9746031746031746
-%\Fitness Test (Melody)= 0.19999999999999996
-%\Fitness Test (Interval Size)= 0.875
-%\Fitness Test (Overall)= 0.7409722222222221
-
-
-%Music_Exercise_3 - Seed: 0.6598695306052512
-\markup "Music_Exercise_3"
-{ \time 4/4 \clef treble \key c \major a'1 r4 g'2.~ g'4 b'2 c'4~ c'2. f'4~ f'4 r4 d'2 c'1 a'4 a'4 d'2~ d'2 r4 b'4 }
-%\Fitness Test (Note:Rest)= 0.9857142857142858
-%\Fitness Test (Note Length)= 0.8190476190476191
-%\Fitness Test (Melody)= 0.19999999999999996
-%\Fitness Test (Interval Size)= 0.9285714285714286
-%\Fitness Test (Overall)= 0.7333333333333334
-
-
-%Music_Exercise_4 - Seed: 0.3308206526071036
-\markup "Music_Exercise_4"
-{ \time 4/4 \clef treble \key c \major c'2 c'4 a'4 g'4 f'2 g'4 r4 f'2.~ f'4 r4 c'4 e'4 g'2 e'2~ e'2 b'4 r4 a'4 a'4 c'4 r4 c'2 d'4 r4 }
-%\Fitness Test (Note:Rest)= 0.9727272727272728
-%\Fitness Test (Note Length)= 0.9818181818181818
-%\Fitness Test (Melody)= 0.44999999999999996
-%\Fitness Test (Interval Size)= 0.75
-%\Fitness Test (Overall)= 0.7886363636363636
-
-
-%Music_Exercise_5 - Seed: 0.7353033640832775
-\markup "Music_Exercise_5"
-{ \time 4/4 \clef treble \key c \major e'4 d'4 c'4 c'4~ c'2. g'4 d'1 f'4 c'4 c'2 a'4 a'4 r4 f'4 r4 c'2 e'4 f'4 g'2 r4 a'4 r4 e'4 e'4 }
-%\Fitness Test (Note:Rest)= 0.9739130434782608
-%\Fitness Test (Note Length)= 0.9449275362318841
+{ \time 4/4 \clef treble \key c \major d'4 f'4 g'4 d'4~ d'4 f'4 a'4 r4 a'4 g'4 b'2~ b'2 g'4 c'4 f'2 r4 e'4~ e'2. f'4~ f'2. e'4 f'4 e'4 r4 b'4 }
+%\Fitness Test (Note:Rest)= 0.9428571428571428
+%\Fitness Test (Note Length)= 0.9301587301587302
 %\Fitness Test (Melody)= 0.47272727272727266
-%\Fitness Test (Interval Size)= 0.8076923076923077
-%\Fitness Test (Overall)= 0.7998150400324313
+%\Fitness Test (Interval Size)= 0.7142857142857143
+%\Fitness Test (Overall)= 0.765007215007215
 
 
-%Music_Exercise_6 - Seed: 0.5762508642640095
-\markup "Music_Exercise_6"
-{ \time 4/4 \clef treble \key c \major b'2 a'4 r4 g'2 a'4 d'4~ d'4 f'4 f'4 e'4~ e'4 b'2 a'4~ a'2. b'4~ b'2. a'4~ a'4 r4 e'4 e'4 d'2 a'4 e'4 }
-%\Fitness Test (Note:Rest)= 0.9052631578947368
-%\Fitness Test (Note Length)= 0.8842105263157894
-%\Fitness Test (Melody)= 0.19999999999999996
-%\Fitness Test (Interval Size)= 0.7307692307692307
-%\Fitness Test (Overall)= 0.6800607287449392
+%Music_Exercise_3 - Seed: 0.05674123248720042
+\markup "Music_Exercise_3"
+{ \time 4/4 \clef treble \key c \major d'2 f'4 c'4 f'4 c'4 e'2~ e'2 a'2 r4 r4 c'4 c'4 d'4 a'4 r4 g'4~ g'4 a'4 d'4 d'4~ d'2. r4 c'4 d'4 b'2 }
+%\Fitness Test (Note:Rest)= 0.9818181818181818
+%\Fitness Test (Note Length)= 0.9818181818181818
+%\Fitness Test (Melody)= 0.5
+%\Fitness Test (Interval Size)= 0.9615384615384616
+%\Fitness Test (Overall)= 0.8562937062937064
 
 
-%Music_Exercise_7 - Seed: 0.7053563363046829
-\markup "Music_Exercise_7"
-{ \time 4/4 \clef treble \key c \major r4 c'4 f'2 r4 r4 g'4 g'4~ g'4 d'4 d'4 b'4~ b'4 e'2 e'4~ e'2. d'4~ d'2. b'4 g'2 a'2 e'2 e'2 }
-%\Fitness Test (Note:Rest)= 0.9666666666666667
-%\Fitness Test (Note Length)= 0.8296296296296296
-%\Fitness Test (Melody)= 0.19999999999999996
-%\Fitness Test (Interval Size)= 1.0
-%\Fitness Test (Overall)= 0.749074074074074
+%Music_Exercise_4 - Seed: 0.8677365816222969
+\markup "Music_Exercise_4"
+{ \time 4/4 \clef treble \key c \major r4 e'2 r4 r4 r4 r4 r4 f'4 c'4 c'2 f'2 r4 g'4~ g'4 b'4 d'2 f'4 g'4 f'2 b'4 a'4 r4 e'4~ e'4 c'4 r4 e'4 }
+%\Fitness Test (Note:Rest)= 0.8400000000000001
+%\Fitness Test (Note Length)= 0.9333333333333333
+%\Fitness Test (Melody)= 0.32499999999999996
+%\Fitness Test (Interval Size)= 0.8636363636363636
+%\Fitness Test (Overall)= 0.7404924242424243
 
 
-%Music_Exercise_8 - Seed: 0.9511975178541808
-\markup "Music_Exercise_8"
-{ \time 4/4 \clef treble \key c \major c'4 d'2 f'4 e'4 c'2 f'4 r4 d'2 d'4 d'4 a'4 c'2~ c'2 r4 a'4~ a'4 r4 g'4 c'4~ c'4 b'4 r4 g'4~ g'4 d'4 b'4 r4 }
+%Music_Exercise_5 - Seed: 0.5566196669698273
+\markup "Music_Exercise_5"
+{ \time 4/4 \clef treble \key c \major b'2 r4 r4 f'2 g'4 g'4 f'4 d'4 c'4 r4 e'2 e'4 g'4~ g'4 a'4 e'4 e'4~ e'4 b'4 a'4 r4 f'1 r4 f'4 b'2 }
 %\Fitness Test (Note:Rest)= 0.9826086956521739
 %\Fitness Test (Note Length)= 0.9594202898550724
-%\Fitness Test (Melody)= 0.42222222222222217
-%\Fitness Test (Interval Size)= 0.9615384615384616
-%\Fitness Test (Overall)= 0.8314474173169826
+%\Fitness Test (Melody)= 0.5
+%\Fitness Test (Interval Size)= 0.6666666666666666
+%\Fitness Test (Overall)= 0.7771739130434782
 
 
-%Music_Exercise_9 - Seed: 0.7472352373308292
+%Music_Exercise_6 - Seed: 0.2506941224567233
+\markup "Music_Exercise_6"
+{ \time 4/4 \clef treble \key c \major a'4 g'4 g'2 d'4 e'4 a'2 a'4 c'2.~ c'4 g'4 b'2~ b'2 g'2 d'1 r4 d'4 b'4 a'4~ a'4 d'4 d'4 e'4 }
+%\Fitness Test (Note:Rest)= 0.8526315789473684
+%\Fitness Test (Note Length)= 0.9543859649122807
+%\Fitness Test (Melody)= 0.48571428571428565
+%\Fitness Test (Interval Size)= 0.9666666666666667
+%\Fitness Test (Overall)= 0.8148496240601504
+
+
+%Music_Exercise_7 - Seed: 0.7925802689210176
+\markup "Music_Exercise_7"
+{ \time 4/4 \clef treble \key c \major r4 b'4 r4 d'4 g'4 b'4 c'2~ c'2 f'4 b'4~ b'4 e'4 e'4 f'4 c'1 a'4 g'2 c'4~ c'4 b'2 r4 c'2 e'4 b'4 }
+%\Fitness Test (Note:Rest)= 0.9428571428571428
+%\Fitness Test (Note Length)= 0.9746031746031746
+%\Fitness Test (Melody)= 0.5076923076923077
+%\Fitness Test (Interval Size)= 0.8571428571428572
+%\Fitness Test (Overall)= 0.8205738705738705
+
+
+%Music_Exercise_8 - Seed: 0.03673737509284347
+\markup "Music_Exercise_8"
+{ \time 4/4 \clef treble \key c \major c'4 c'4 r4 a'4~ a'2. b'4 f'2 f'4 b'4 g'4 c'4 r4 r4 f'4 g'2.~ g'4 c'2 e'4 b'2 e'4 g'4 d'2 d'4 f'4 }
+%\Fitness Test (Note:Rest)= 0.9363636363636363
+%\Fitness Test (Note Length)= 0.9818181818181818
+%\Fitness Test (Melody)= 0.3538461538461538
+%\Fitness Test (Interval Size)= 0.9666666666666667
+%\Fitness Test (Overall)= 0.8096736596736597
+
+
+%Music_Exercise_9 - Seed: 0.24414611303423628
 \markup "Music_Exercise_9"
-{ \time 4/4 \clef treble \key c \major f'4 b'2 d'4~ d'4 f'4 d'4 f'4~ f'4 a'4 a'2 f'1 g'2 r4 a'4 d'1 d'4 f'2.~ f'4 g'4 g'2 }
-%\Fitness Test (Note:Rest)= 0.8588235294117648
-%\Fitness Test (Note Length)= 0.8470588235294118
-%\Fitness Test (Melody)= 0.3666666666666666
-%\Fitness Test (Interval Size)= 0.7307692307692307
-%\Fitness Test (Overall)= 0.7008295625942685
-
-
-%Music_Exercise_10 - Seed: 0.705211572528301
-\markup "Music_Exercise_10"
-{ \time 4/4 \clef treble \key c \major r4 r4 c'4 d'4~ d'4 a'2 f'4 f'4 g'4 a'2 f'4 f'2 r4 r4 f'4 a'2~ a'2 r4 b'4 g'1 g'2 d'2 }
+{ \time 4/4 \clef treble \key c \major a'1 g'2 b'2 d'4 b'2.~ b'4 g'2 d'4 r4 c'2 d'4 r4 r4 f'4 c'4~ c'4 f'4 c'2 e'4 f'4 g'4 g'4 }
 %\Fitness Test (Note:Rest)= 0.95
 %\Fitness Test (Note Length)= 0.9333333333333333
-%\Fitness Test (Melody)= 0.42222222222222217
-%\Fitness Test (Interval Size)= 0.5909090909090909
-%\Fitness Test (Overall)= 0.7241161616161615
+%\Fitness Test (Melody)= 0.47272727272727266
+%\Fitness Test (Interval Size)= 0.9615384615384616
+%\Fitness Test (Overall)= 0.8293997668997669
 
 
-%Music_Exercise_11 - Seed: 0.525122597542291
-\markup "Music_Exercise_11"
-{ \time 4/4 \clef treble \key c \major a'1 b'4 a'4 r4 c'4~ c'2. c'4~ c'4 r4 r4 e'4 r4 a'4 b'4 r4 r4 c'4 r4 c'4 r4 f'4 f'2~ f'2 g'4 b'4 }
-%\Fitness Test (Note:Rest)= 0.8363636363636364
-%\Fitness Test (Note Length)= 0.896969696969697
-%\Fitness Test (Melody)= 0.5333333333333332
-%\Fitness Test (Interval Size)= 0.5
-%\Fitness Test (Overall)= 0.6916666666666667
-
-
-%Music_Exercise_12 - Seed: 0.4782641782653373
-\markup "Music_Exercise_12"
-{ \time 4/4 \clef treble \key c \major f'4 c'2 f'4 d'2 f'2~ f'2 c'2 c'1 f'4 c'4 a'4 c'4 r4 c'2.~ c'4 f'4 a'4 r4 g'4 d'2 c'4 }
-%\Fitness Test (Note:Rest)= 0.9052631578947368
-%\Fitness Test (Note Length)= 0.9543859649122807
-%\Fitness Test (Melody)= 0.38181818181818183
-%\Fitness Test (Interval Size)= 0.8076923076923077
-%\Fitness Test (Overall)= 0.7622899030793768
-
-
-%Music_Exercise_13 - Seed: 0.7812461740311395
-\markup "Music_Exercise_13"
-{ \time 4/4 \clef treble \key c \major f'2 c'4 r4 r4 a'4 g'4 c'4 c'2 d'4 r4 f'4 a'4 g'4 a'4 c'1 c'4 r4 a'2 d'4 r4 a'4 r4 d'1 }
-%\Fitness Test (Note:Rest)= 0.9391304347826087
-%\Fitness Test (Note Length)= 0.9449275362318841
-%\Fitness Test (Melody)= 0.34285714285714275
-%\Fitness Test (Interval Size)= 0.8636363636363636
-%\Fitness Test (Overall)= 0.7726378693769999
-
-
-%Music_Exercise_14 - Seed: 0.19750504190328677
-\markup "Music_Exercise_14"
-{ \time 4/4 \clef treble \key c \major r4 d'4 g'4 a'4~ a'2. r4 r4 a'2 d'4 f'2 c'2 a'4 r4 g'2 r4 d'4 r4 a'4~ a'2. b'4 b'4 c'4 d'4 a'4 }
-%\Fitness Test (Note:Rest)= 0.9272727272727272
+%Music_Exercise_10 - Seed: 0.7798601759808051
+\markup "Music_Exercise_10"
+{ \time 4/4 \clef treble \key c \major d'4 a'2 b'4~ b'4 c'4 e'2~ e'2 g'4 a'4 g'1 r4 e'2 r4 f'4 e'4 a'4 e'4 r4 b'2 d'4 d'4 c'4 c'4 e'4 }
+%\Fitness Test (Note:Rest)= 0.9363636363636363
 %\Fitness Test (Note Length)= 0.9818181818181818
 %\Fitness Test (Melody)= 0.44999999999999996
-%\Fitness Test (Interval Size)= 1.0
-%\Fitness Test (Overall)= 0.8397727272727273
+%\Fitness Test (Interval Size)= 0.8571428571428571
+%\Fitness Test (Overall)= 0.8063311688311688
 
 
-%Music_Exercise_15 - Seed: 0.9848773907107141
-\markup "Music_Exercise_15"
-{ \time 4/4 \clef treble \key c \major e'2 r4 g'4~ g'4 b'4 r4 d'4 r4 r4 r4 r4 e'4 a'2 r4 a'2 r4 f'4~ f'4 c'4 g'2 r4 a'4 g'2 g'2 r4 r4 }
-%\Fitness Test (Note:Rest)= 0.7416666666666667
-%\Fitness Test (Note Length)= 0.9111111111111111
-%\Fitness Test (Melody)= 0.19999999999999996
-%\Fitness Test (Interval Size)= 1.0
-%\Fitness Test (Overall)= 0.7131944444444445
-
-
-%Music_Exercise_16 - Seed: 0.32502540971308014
-\markup "Music_Exercise_16"
-{ \time 4/4 \clef treble \key c \major a'4 r4 c'2 e'4 b'2 b'4~ b'4 r4 g'2~ g'2 e'2~ e'2 r4 g'4~ g'4 r4 b'2 a'4 e'2 b'4 b'4 f'4 f'4 b'4 }
-%\Fitness Test (Note:Rest)= 1.0
+%Music_Exercise_11 - Seed: 0.7131054496658513
+\markup "Music_Exercise_11"
+{ \time 4/4 \clef treble \key c \major c'2 e'4 d'4~ d'2. r4 e'2 c'2 a'2 b'4 a'4 a'2 a'4 r4 c'1 g'2 a'4 d'4 b'4 g'4 e'4 e'4 }
+%\Fitness Test (Note:Rest)= 0.9
 %\Fitness Test (Note Length)= 0.9333333333333333
 %\Fitness Test (Melody)= 0.44999999999999996
-%\Fitness Test (Interval Size)= 0.9
-%\Fitness Test (Overall)= 0.8208333333333333
-
-
-%Music_Exercise_17 - Seed: 0.20552810935893517
-\markup "Music_Exercise_17"
-{ \time 4/4 \clef treble \key c \major f'4 f'4 r4 e'4 d'4 a'2.~ a'4 c'2 c'4~ c'4 f'4 g'4 b'4~ b'4 e'4 b'2~ b'2 c'4 e'4~ e'4 d'2.~ d'4 r4 r4 r4 }
-%\Fitness Test (Note:Rest)= 0.9894736842105263
-%\Fitness Test (Note Length)= 0.9543859649122807
-%\Fitness Test (Melody)= 0.38181818181818183
-%\Fitness Test (Interval Size)= 0.9615384615384616
-%\Fitness Test (Overall)= 0.8218040731198626
-
-
-%Music_Exercise_18 - Seed: 0.9842495139739782
-\markup "Music_Exercise_18"
-{ \time 4/4 \clef treble \key c \major e'4 g'4 g'2 r4 g'4 r4 c'4~ c'4 g'2 d'4~ d'4 c'4 c'4 d'4~ d'4 b'2.~ b'4 r4 g'2~ g'2 b'4 f'4~ f'2. r4 }
-%\Fitness Test (Note:Rest)= 0.9777777777777779
-%\Fitness Test (Note Length)= 0.9037037037037037
-%\Fitness Test (Melody)= 0.48571428571428565
-%\Fitness Test (Interval Size)= 0.9
-%\Fitness Test (Overall)= 0.8167989417989417
-
-
-%Music_Exercise_19 - Seed: 0.09263609656354199
-\markup "Music_Exercise_19"
-{ \time 4/4 \clef treble \key c \major f'1 e'4 e'4 d'4 f'4 a'4 d'2 r4 e'4 a'4 b'4 f'4~ f'4 r4 d'4 d'4 a'4 r4 r4 f'4 e'2 a'4 d'4 r4 r4 a'4 d'4 }
-%\Fitness Test (Note:Rest)= 0.9692307692307692
-%\Fitness Test (Note Length)= 0.9025641025641026
-%\Fitness Test (Melody)= 0.3999999999999999
-%\Fitness Test (Interval Size)= 0.9285714285714286
-%\Fitness Test (Overall)= 0.8000915750915751
-
-
-%Music_Exercise_20 - Seed: 0.4893024505135932
-\markup "Music_Exercise_20"
-{ \time 4/4 \clef treble \key c \major d'2 g'2 g'4 c'4 d'2 e'4 f'2 f'4~ f'4 d'2 f'4~ f'4 c'4 g'2~ g'2 f'2 g'1 r4 b'4 b'4 c'4 }
-%\Fitness Test (Note:Rest)= 0.8555555555555555
-%\Fitness Test (Note Length)= 0.8296296296296296
-%\Fitness Test (Melody)= 0.3538461538461538
 %\Fitness Test (Interval Size)= 0.7857142857142857
-%\Fitness Test (Overall)= 0.7061864061864062
+%\Fitness Test (Overall)= 0.7672619047619047
+
+
+%Music_Exercise_12 - Seed: 0.9751262616356373
+\markup "Music_Exercise_12"
+{ \time 4/4 \clef treble \key c \major g'4 f'2 e'4~ e'4 g'2 b'4~ b'2. f'4 e'2 f'4 e'4~ e'4 r4 a'4 b'4 a'4 d'2 a'4~ a'4 g'4 r4 b'4 g'4 e'4 a'2 }
+%\Fitness Test (Note:Rest)= 0.8952380952380952
+%\Fitness Test (Note Length)= 0.8793650793650793
+%\Fitness Test (Melody)= 0.5846153846153845
+%\Fitness Test (Interval Size)= 0.7
+%\Fitness Test (Overall)= 0.7648046398046398
+
+
+%Music_Exercise_13 - Seed: 0.49865564327070333
+\markup "Music_Exercise_13"
+{ \time 4/4 \clef treble \key c \major f'4 c'2 r4 c'4 a'4 c'4 a'4 e'4 b'2 e'4~ e'4 d'2 a'4~ a'2. a'4 a'2 a'2~ a'2 r4 a'4~ a'4 r4 c'4 c'4 }
+%\Fitness Test (Note:Rest)= 0.95
+%\Fitness Test (Note Length)= 0.9333333333333333
+%\Fitness Test (Melody)= 0.29999999999999993
+%\Fitness Test (Interval Size)= 0.8333333333333333
+%\Fitness Test (Overall)= 0.7541666666666667
+
+
+%Music_Exercise_14 - Seed: 0.5893892017675825
+\markup "Music_Exercise_14"
+{ \time 4/4 \clef treble \key c \major f'4 f'4 r4 c'4~ c'4 g'2 c'4~ c'4 e'4 e'4 e'4~ e'4 d'4 d'2 f'4 g'2.~ g'4 r4 d'4 g'4~ g'4 a'4 e'4 e'4 d'4 f'2 r4 }
+%\Fitness Test (Note:Rest)= 0.9363636363636363
+%\Fitness Test (Note Length)= 0.9212121212121213
+%\Fitness Test (Melody)= 0.3538461538461538
+%\Fitness Test (Interval Size)= 0.75
+%\Fitness Test (Overall)= 0.7403554778554778
+
+
+%Music_Exercise_15 - Seed: 0.9936440411009918
+\markup "Music_Exercise_15"
+{ \time 4/4 \clef treble \key c \major b'4 d'4 d'4 a'4 r4 g'4 r4 r4 r4 f'2.~ f'4 r4 c'4 r4 d'4 c'2.~ c'4 e'4 f'4 c'4 c'4 c'4 d'4 r4 b'4 f'2 d'4 }
+%\Fitness Test (Note:Rest)= 0.9199999999999999
+%\Fitness Test (Note Length)= 0.88
+%\Fitness Test (Melody)= 0.42222222222222217
+%\Fitness Test (Interval Size)= 0.8636363636363636
+%\Fitness Test (Overall)= 0.7714646464646464
+
+
+%Music_Exercise_16 - Seed: 0.9795503444684441
+\markup "Music_Exercise_16"
+{ \time 4/4 \clef treble \key c \major f'4 d'4 c'4 b'4 d'1 d'4 r4 d'4 d'4 e'2 b'2~ b'2 g'2~ g'2 e'2~ e'2 d'4 d'4~ d'4 r4 e'4 f'4 }
+%\Fitness Test (Note:Rest)= 0.9111111111111111
+%\Fitness Test (Note Length)= 0.9185185185185185
+%\Fitness Test (Melody)= 0.6
+%\Fitness Test (Interval Size)= 0.75
+%\Fitness Test (Overall)= 0.7949074074074074
+
+
+%Music_Exercise_17 - Seed: 0.005883967712908111
+\markup "Music_Exercise_17"
+{ \time 4/4 \clef treble \key c \major e'4 r4 d'4 r4 f'1 f'2 a'4 r4 r4 r4 a'4 g'4 g'4 g'4 c'2 f'4 r4 f'4 e'4 r4 r4 b'2 c'2 g'2 }
+%\Fitness Test (Note:Rest)= 0.8666666666666667
+%\Fitness Test (Note Length)= 0.9611111111111111
+%\Fitness Test (Melody)= 0.19999999999999996
+%\Fitness Test (Interval Size)= 0.8333333333333334
+%\Fitness Test (Overall)= 0.7152777777777778
+
+
+%Music_Exercise_18 - Seed: 0.6792297795488981
+\markup "Music_Exercise_18"
+{ \time 4/4 \clef treble \key c \major d'1 a'2 c'2 g'2 r4 f'4~ f'4 d'4 a'4 c'4 r4 f'2 r4 r4 r4 r4 c'4 d'4 r4 f'2 r4 e'4 r4 e'4 }
+%\Fitness Test (Note:Rest)= 0.808695652173913
+%\Fitness Test (Note Length)= 0.9594202898550724
+%\Fitness Test (Melody)= 0.19999999999999996
+%\Fitness Test (Interval Size)= 0.7857142857142857
+%\Fitness Test (Overall)= 0.6884575569358178
+
+
+%Music_Exercise_19 - Seed: 0.9563075654254707
+\markup "Music_Exercise_19"
+{ \time 4/4 \clef treble \key c \major r4 b'4 b'2 r4 b'2 b'4 r4 f'4 g'2~ g'2 r4 c'4 a'2 r4 f'4~ f'4 a'4 r4 e'4~ e'2. g'4 g'4 f'4 b'4 d'4 }
+%\Fitness Test (Note:Rest)= 0.9272727272727272
+%\Fitness Test (Note Length)= 0.9818181818181818
+%\Fitness Test (Melody)= 0.19999999999999996
+%\Fitness Test (Interval Size)= 0.7222222222222222
+%\Fitness Test (Overall)= 0.7078282828282829
+
+
+%Music_Exercise_20 - Seed: 0.26778571071617185
+\markup "Music_Exercise_20"
+{ \time 4/4 \clef treble \key c \major g'4 f'4 a'2 d'2 f'2 d'4 f'4 e'4 c'4~ c'4 f'2 f'4~ f'4 g'4 e'4 b'4 d'4 b'2 b'4 a'2 r4 r4 r4 a'2 d'4 }
+%\Fitness Test (Note:Rest)= 0.9304347826086956
+%\Fitness Test (Note Length)= 0.8724637681159421
+%\Fitness Test (Melody)= 0.26249999999999996
+%\Fitness Test (Interval Size)= 0.7941176470588235
+%\Fitness Test (Overall)= 0.7148790494458652
 
 

@@ -28,9 +28,15 @@ def create_database(numMusic, numBars, Name):
         file.write("%\Fitness Test (Overall)= {0}\n\n\n".format(fitness.all_default_test(rawData)))
         file.close()
 
+def delete_file_content(Name):
+    file_to_delete = open(Name + "File.txt",'w')
+    file_to_delete.close()
+
 if __name__ == "__main__":
-     
-    create_database(20, 8,"musicDatabaseUnweighted")
+
+    NAME =  "musicDatabaseUnweighted"
+    delete_file_content(NAME)
+    create_database(20, 8,NAME)
 
 
 
