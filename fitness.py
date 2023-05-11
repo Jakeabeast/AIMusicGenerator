@@ -93,7 +93,12 @@ def interval_size_ratio(rawData, targetIntervalDecimal = 0.5, scaleDegree = 2):
         
         totalIntervals += 1
         noteIdx += 1
-    inaccuracy = abs(targetIntervalDecimal - appropriateIntervals / totalIntervals)
+
+    try:
+        inaccuracy = abs(targetIntervalDecimal - appropriateIntervals / totalIntervals)
+    except: 
+        return "0 Intervals"
+    
     return 1.0 - inaccuracy
 
 def compare_note_interval(note1, note2):

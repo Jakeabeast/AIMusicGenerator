@@ -56,7 +56,7 @@ class UnrefinedMusic:
                 accidental = "natural" #add different accidentals later
                     
                 while True:
-                    duration = random.choices((["whole",4],["half",2],["quarter",1]), weights=(14,28,58))
+                    duration = random.choices((["whole",4],["half",2],["quarter",1]), weights=(14,28,58)) 
                     duration = duration[0]
                     if duration[1] <= remainingSong: 
                         break
