@@ -8,7 +8,7 @@ def create_database(numMusic, numBars, Name):
 
     file = open(FILENAME, 'a')
     file.write("\\version \"2.24.1\"\n")
-    file.write("\header { title = \markup \"Database\" }\n\n")
+    file.write("\header {{ title = \markup \"{0}\" }}\n\n".format(Name))
     file.close()
 
     for i in range(numMusic):
