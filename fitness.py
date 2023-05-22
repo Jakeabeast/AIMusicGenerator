@@ -1,15 +1,17 @@
 # take in raw data and grade it in several different fitness functions
 def all_default_test(rawData):    
-    totalTests = 4
+
+    # Ensure weighting adds to 1 (e.g 0.4 + 0.2 + 0.1 + 0.2 = 1)
     try:
-        totalTestValue = note_rest_ratio(rawData)
-        totalTestValue += note_length_ratio(rawData)
-        totalTestValue += contiguous_melody_ratio(rawData)
-        totalTestValue += interval_size_ratio(rawData)
-    except:
+        totalTestValue = note_rest_ratio(rawData) * 0.4
+        totalTestValue += note_length_ratio(rawData) * 0.2
+        totalTestValue += contiguous_melody_ratio(rawData) * 0.1
+        totalTestValue += interval_size_ratio(rawData) * 0.2
+    except Exception as e:
+        print(e)
         return -1
 
-    return totalTestValue / totalTests
+    return totalTestValue
 
 
 def note_rest_ratio(rawData, targetRestDecimal = 0.15):
@@ -75,7 +77,7 @@ def contiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
     try:
         inaccuracy = abs(targetHarmonicDecimal - harmonicSections / totalSections)
     except: 
-        return "0 Sections"
+        return 0
     
     return 1.0 - inaccuracy
 

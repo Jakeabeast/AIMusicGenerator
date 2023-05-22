@@ -42,7 +42,7 @@ class UnrefinedMusic:
 
         random.seed(self.seed)
         while remainingSong > 0:
-            element = random.choices(("note", "rest"), weights=(80,20))
+            element = random.choices(("note", "rest"), weights=None) #(80,20)
             element = element[0]
 
             if (element == "rest"):

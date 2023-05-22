@@ -19,9 +19,9 @@ def create_file(numMusic, numBars, fileName = "test"):
         rawData.set_seed(random.random())
         add_exercise(fileName, rawData, i)
 
-def create_sorted_file(seeds, numBars, fileName = "test"):
+def create_sorted_file(seeds, numBars, fitnessName, fileName = "test"):
     rawData = music.UnrefinedMusic(bars = numBars)
-    fileName = "Sorted" + fileName
+    fileName = "SortedBy" + fitnessName + "-" + fileName 
     FILENAME = fileName + "File.txt"
     
     delete_file_content(fileName)
@@ -52,10 +52,10 @@ def add_exercise(fileName, rawData, iteration):
         music.Lilypond(rawData, fileName)
 
         file = open(FILENAME, 'a')
-        file.write("%\Fitness Test (Note:Rest)= {0}\n".format(fitness.note_rest_ratio(rawData)))
-        file.write("%\Fitness Test (Note Length)= {0}\n".format(fitness.note_length_ratio(rawData)))
+        file.write("%\Fitness Test (NoteToRest)= {0}\n".format(fitness.note_rest_ratio(rawData)))
+        file.write("%\Fitness Test (NoteLength)= {0}\n".format(fitness.note_length_ratio(rawData)))
         file.write("%\Fitness Test (Melody)= {0}\n".format(fitness.contiguous_melody_ratio(rawData)))
-        file.write("%\Fitness Test (Interval Size)= {0}\n".format(fitness.interval_size_ratio(rawData)))
+        file.write("%\Fitness Test (IntervalSize)= {0}\n".format(fitness.interval_size_ratio(rawData)))
         file.write("%\Fitness Test (Overall)= {0}\n\n\n".format(fitness.all_default_test(rawData)))
         file.close()
 
@@ -100,7 +100,7 @@ def sort_by_rank(fileName, fitnessTest):
                 sorted_seeds.append(k)
     
     sorted_seeds = list(reversed(sorted_seeds))
-    create_sorted_file(seeds = sorted_seeds, numBars = numBars, fileName = fileName)
+    create_sorted_file(seeds = sorted_seeds, numBars = numBars, fitnessName = fitnessTest, fileName = fileName)
 
 
 def extract_float_from_line(str):

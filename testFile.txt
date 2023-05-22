@@ -102,3 +102,5 @@
 %\Fitness Test (Overall)= 0.609375
 
 
+{ \time 4/4 \clef treble \key c \major g'4 c'2 r4 r4 r4 r4 r4 r4 r4 r4 d'4~ d'4 b'2 r4 r4 r4 r4 r4 r4 r4 r4 e'4 r4 e'2 g'4~ g'4 r4 r4 g'4 }
+{ \time 4/4 \clef treble \key c \major g'4 c'2 r4 r4 r4 r4 r4 r4 r4 r4 d'4~ d'4 b'2 r4 r4 r4 r4 r4 r4 r4 r4 e'4 r4 e'2 g'4~ g'4 r4 r4 g'4 }

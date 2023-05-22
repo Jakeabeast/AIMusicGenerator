@@ -26,13 +26,18 @@ def extract_float_from_line(str):
     print(str, end="")
     print(num, end="\n")        
     return(float(num))
+
     
 
 
 if __name__ == "__main__":
     
-   #database.create_file(10, 8)
-   database.sort_by_rank("test", "Overall")
     
+   database.create_file(40, 8, "UnweightedExercises")
+   database.sort_by_rank("UnweightedExercises", "NoteToRest")
+   database.sort_by_rank("UnweightedExercises", "NoteLength")
+   database.sort_by_rank("UnweightedExercises", "Melody")
+   database.sort_by_rank("UnweightedExercises", "IntervalSize")
+   database.sort_by_rank("UnweightedExercises", "Overall")
 
     
