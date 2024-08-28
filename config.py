@@ -4,7 +4,7 @@ class Config:
 	"""
 	Add configuration for the different fitness parameters
 
-	Attributes
+	Musical Characteristics/Attributes
 	----------
 	note_rest_ratio : int 
 		decimal percentage of rests to notes (e.g 0.15 indicates 15% rest to 85% notes)

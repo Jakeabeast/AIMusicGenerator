@@ -25,7 +25,7 @@ if __name__ == "__main__":
 	music_file.create_file(numMusic = 1000, numBars = 8)
 	
 	#draw graph of created file
-	graph.draw()
+	graph.draw() #change
 
 
 	music_file.sort_by_rank("NoteToRest")
