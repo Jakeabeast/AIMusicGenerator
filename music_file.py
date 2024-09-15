@@ -21,7 +21,7 @@ def create_file(numMusic, numBars, fileName = "test", seed = None):
 
 	file = open(FILENAME, 'w')
 	file.write("\\version \"2.23.6\"\n")
-	file.write("\header {{ title = \"{0}\" }}\n".format(fileName))
+	file.write("\\header {{ title = \"{0}\" }}\n".format(fileName))
 	file.write("%Bar Length: {0}\n".format(numBars))
 	file.write("%Configuration: {0}\n\n".format(config.print_config()))
 
@@ -39,7 +39,7 @@ def create_sorted_file(seeds, numBars, fitnessName, fileName = "test"):
 
 	file = open(FILENAME, 'w')
 	file.write("\\version \"2.24.1\"\n")
-	file.write("\header {{ title = \markup \"{0}\" }}\n".format(fileName))
+	file.write("\\header {{ title = \\markup \"{0}\" }}\n".format(fileName))
 	file.write("%Bar Length: {0}\n\n".format(numBars))
 
 	for i in range(len(seeds)):
@@ -55,7 +55,7 @@ def delete_file_content(name):
 
 def add_exercise(file, fileName, rawData, iteration = 1):
 		file.write("%Music_Exercise_{0} - Seed: {1}\n".format(str(iteration+1), rawData.seed_str()))
-		file.write("\markup \"Music_Exercise_{0}\"\n".format(str(iteration+1)))
+		file.write("\\markup \"Music_Exercise_{0}\"\n".format(str(iteration+1)))
 
 		# write lilypond music into file (return string instead?)
 		Lilypond(rawData, file, fileName)
@@ -63,23 +63,23 @@ def add_exercise(file, fileName, rawData, iteration = 1):
 		# write fitness scores + append to global dict
 		note_rest_ratio = fitness.note_rest_ratio(rawData)
 		fitness_scores["note_rest_ratio"].append(note_rest_ratio)
-		file.write("%\Fitness Test (NoteToRest)= {0}\n".format(fitness.note_rest_ratio(rawData)))
+		file.write("%\\Fitness Test (NoteToRest)= {0}\n".format(fitness.note_rest_ratio(rawData)))
 
 		note_length_ratio = fitness.note_length_ratio(rawData)
 		fitness_scores["note_length_ratio"].append(note_length_ratio)
-		file.write("%\Fitness Test (NoteLength)= {0}\n".format(fitness.note_length_ratio(rawData)))
+		file.write("%\\Fitness Test (NoteLength)= {0}\n".format(fitness.note_length_ratio(rawData)))
 		
 		contiguous_melody_ratio = fitness.contiguous_melody_ratio(rawData)
 		fitness_scores["contiguous_melody_ratio"].append(contiguous_melody_ratio)
-		file.write("%\Fitness Test (Melody)= {0}\n".format(fitness.contiguous_melody_ratio(rawData)))
+		file.write("%\\Fitness Test (Melody)= {0}\n".format(fitness.contiguous_melody_ratio(rawData)))
 		
 		interval_size_ratio = fitness.interval_size_ratio(rawData)
 		fitness_scores["interval_size_ratio"].append(interval_size_ratio)
-		file.write("%\Fitness Test (IntervalSize)= {0}\n".format(fitness.interval_size_ratio(rawData)))
+		file.write("%\\Fitness Test (IntervalSize)= {0}\n".format(fitness.interval_size_ratio(rawData)))
 		
 		overall_score = fitness.all_default_test(rawData)
 		fitness_scores["overall_score"].append(overall_score)
-		file.write("%\Fitness Test (Overall)= {0}\n\n\n".format(overall_score))
+		file.write("%\\Fitness Test (Overall)= {0}\n\n\n".format(overall_score))
 		return overall_score
 
 def sort_by_rank(fitnessTest, fileName = "test"):
@@ -91,7 +91,7 @@ def sort_by_rank(fitnessTest, fileName = "test"):
 		x = open(FILENAME, 'r').readlines()[2] 
 		numBars = int(extract_float_from_line(x))
 	except:
-		print("CHECK INDEX OF \'%Bar Length: \#\' IN THE SORTED FILE")
+		print("CHECK INDEX OF \'%Bar Length: #\' IN THE SORTED FILE")
 	
 	#creat dictionary with seed:rank mapping
 	dictionary = {}
