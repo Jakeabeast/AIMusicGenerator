@@ -23,10 +23,14 @@ class Config:
 		self.interval_size_ratio = c4
 	
 	def print_config(self):
+		print("%s, %s, %s, %s" % (self.note_rest_ratio, self.note_length_ratio, self.contiguous_melody_ratio, self.interval_size_ratio))
+
+	def __str__(self):
 		return "%s, %s, %s, %s" % (self.note_rest_ratio, self.note_length_ratio, self.contiguous_melody_ratio, self.interval_size_ratio)
 
 
-configV1 = Config(0.15, [0.7, 0.2, 0.1], [0.8, 3], [0.5, 2])
+
+configV1 = Config(0.1, [0.9, 0.1, 0.05], [0.8, 3], [0.5, 2])
 
 
 active_config = configV1
