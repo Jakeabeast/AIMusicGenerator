@@ -20,26 +20,37 @@ class UnrefinedMusic:
 	def raw_music(self):
 		musicArray = []
 		remainingSong = self.numberOfBars * self.timeSig[1] #4 bars in common time makes 4 * 4 = 16 beats
+		remainingBeatsInBar = self.timeSig[1]
 
 		random.seed(self.seed)
 		while remainingSong > 0:
-			element = random.choices(("note", "rest"), weights=(85,15))[0] #(80,20)
+			element = random.choices(("note", "rest"), weights=(90,10))[0] #(90% - notes, 10% - rests)
 
 			if (element == "rest"):
 				note = "rest"
 				accidental = ""
-				duration = ["quarter", 1] #only quarter rests for now
+				duration = ["crotchet", 1] #only quarter rests for now
 
 			elif (element == "note"):
 				note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
 				accidental = "natural" #add different accidentals later
 					
-				while True:
-					duration = random.choices((["whole",4],["half",2],["quarter",1]), weights=None)[0]
-					if duration[1] <= remainingSong: 
-						break
-
+				if remainingBeatsInBar >= 4:
+					duration = random.choices((["semibreve",4],["dottedMinim",3],["minim",2],["crotchet",1],["quaver",0.5]), weights=(6,3,3,85,3))[0]
+				elif remainingBeatsInBar >= 3:
+					duration = random.choices((["dottedMinim",3],["minim",2],["crotchet",1],["quaver",0.5]), weights=(5,7,84,9))[0]
+				elif remainingBeatsInBar >= 2:
+					duration = random.choices((["minim",2],["crotchet",1],["quaver",0.5]), weights=(5,85,10))[0]
+				elif remainingBeatsInBar >= 1:
+					duration = random.choices((["crotchet",1],["quaver",0.5]), weights=(95,5))[0]
+				else:
+					duration = ["quaver", 0.5]
+					
+		
 			remainingSong -= duration[1]
+			remainingBeatsInBar -= duration[1]
+			if remainingBeatsInBar <= 0: remainingBeatsInBar = self.timeSig[1]
+			
 			musicArray.append([note, accidental, duration[0]])
 
 		return musicArray
@@ -72,14 +83,15 @@ class Lilypond:
 			duration = self.convert_duration(raw_data_array[i][2])
 
 			if duration > remainingBeatsInBar:
-				refined_notes_array.append([note, accidental, self.convert_beat(remainingBeatsInBar), "~"])
-				refined_notes_array.append([note, accidental, self.convert_beat(duration-remainingBeatsInBar), ""])
-				remainingBeatsInBar = self.timeSig[1] - (duration - remainingBeatsInBar)
+				assert("error, notes shouldn't tie over")
 			else:
 				refined_notes_array.append([note, accidental, self.convert_beat(duration), ""])
 				remainingBeatsInBar -= duration
-				if remainingBeatsInBar <= 0:
-					remainingBeatsInBar = self.timeSig[1]
+				
+			if remainingBeatsInBar <= 0:
+				remainingBeatsInBar = self.timeSig[1]
+
+		
 
 		return refined_notes_array
 
@@ -100,14 +112,16 @@ class Lilypond:
 			return -1 
 
 	def convert_duration(self, duration):
-		if duration == "whole":
+		if duration == "semibreve" or duration == 4:
 			return 4
-		elif duration == 3:
+		elif duration == "dottedMinim" or duration == 3:
 			return 3
-		elif duration == "half" or duration == 2:
+		elif duration == "minim" or duration == 2:
 			return 2
-		elif duration == "quarter" or duration == 1:
+		elif duration == "crotchet" or duration == 1:
 			return 1
+		elif duration == "quaver" or duration == 0.5:
+			return 0.5
 		else:
 			return -1 
 		
@@ -120,6 +134,8 @@ class Lilypond:
 			return "2"
 		elif duration == 1:
 			return "4"
+		elif duration == 0.5:
+			return "8"
 		else:
 			return "ERROR, REPORT ME" 
 		

@@ -6,8 +6,8 @@ def all_default_test(rawData):
 
 	# Ensure weighting adds to 1 (e.g 0.4 + 0.2 + 0.1 + 0.2 = 1)
 	try:
-		totalTestValue = note_rest_ratio(rawData) * 0.4
-		totalTestValue += note_length_ratio(rawData) * 0.2
+		totalTestValue = note_rest_ratio(rawData) * 0.3
+		totalTestValue += note_length_ratio(rawData) * 0.3
 		totalTestValue += contiguous_melody_ratio(rawData) * 0.1
 		totalTestValue += interval_size_ratio(rawData) * 0.2
 
@@ -20,8 +20,8 @@ def all_default_test(rawData):
 
 
 def note_rest_ratio(rawData):
-	# default to 15% rest amount and 85% note amount
-	targetRestDecimal = 0.15 if config is None else config.note_rest_ratio
+	# default to 10% rest amount and 90% note amount
+	targetRestDecimal = 0.10 if config is None else config.note_rest_ratio
 
 	restCount = 0; 
 	totalBeats = rawData.numberOfBars * rawData.timeSig[1]; 
@@ -35,40 +35,48 @@ def note_rest_ratio(rawData):
 	return 1.0 - scaledInaccuracy
 
 def note_length_ratio(rawData):
-	# default to 70% quarter, 20% half, 10% whole
+	# default to 90% crotchet, 10% quaver, 5% other
 	if config is None:
-		targetQuarterNoteDecimal = 0.7
-		targetHalfNoteDecimal = 0.2
-		targetWholeNoteDecimal = 0.1
+		targetCrotchetNoteDecimal = 0.90
+		targetQuaverNoteDecimal = 0.10
+		targetOtherNoteDecimal = 0.05
 	else:
-		targetQuarterNoteDecimal = config.note_length_ratio[0]
-		targetHalfNoteDecimal = config.note_length_ratio[1]
-		targetWholeNoteDecimal = config.note_length_ratio[2]
+		targetCrotchetNoteDecimal = config.note_length_ratio[0]
+		targetQuaverNoteDecimal = config.note_length_ratio[1]
+		targetOtherNoteDecimal = config.note_length_ratio[2]
 
-	wholeCount = 0
-	halfCount = 0
-	quarterCount = 0
+	semibreveBeats = 0
+	dottedMinimBeats = 0
+	minimBeats = 0
+	crotchetBeats = 0
+	quaverBeats = 0
 	totalBeats = 0
 	for element in rawData.noteArray:
-		if element[2] == "whole":
-			wholeCount += 4
+		if element[2] == "semibreve":
+			semibreveBeats += 4
 			totalBeats += 4
-		elif element[2] == "half":
-			halfCount +=2
+		elif element[2] == "dottedMinim":
+			dottedMinimBeats += 3
+			totalBeats += 3
+		elif element[2] == "minim":
+			minimBeats += 2
 			totalBeats += 2
-		elif element[2] == "quarter":
-			quarterCount += 1
+		elif element[2] == "crotchet":
+			crotchetBeats += 1
 			totalBeats += 1
+		elif element[2] == "quaver":
+			quaverBeats += 0.5
+			totalBeats += 0.5
 		else:
 			assert "ERROR UNKNOWN LENGTH"
 
 
-	inaccuracy = abs(targetWholeNoteDecimal - wholeCount / totalBeats) 
-	inaccuracy += abs(targetHalfNoteDecimal - halfCount / totalBeats) 
-	inaccuracy += abs(targetQuarterNoteDecimal - quarterCount / totalBeats) 
-	scaledInaccuracy = inaccuracy * 0.5
+	inaccuracy = abs(targetCrotchetNoteDecimal - crotchetBeats / totalBeats) 
+	inaccuracy += abs(targetQuaverNoteDecimal - quaverBeats / totalBeats) 
+	otherBeats = semibreveBeats + dottedMinimBeats + minimBeats
+	inaccuracy += abs(targetOtherNoteDecimal - otherBeats / totalBeats) 
 
-	return 1.0 - scaledInaccuracy
+	return max(0, 1.0 - inaccuracy)
 
 def contiguous_melody_ratio(rawData):
 	#default is 80% of sections is harmonic while 20% are not
