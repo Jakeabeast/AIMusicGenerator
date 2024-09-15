@@ -23,7 +23,7 @@ def create_file(numMusic, numBars, fileName = "test", seed = None):
 	file.write("\\version \"2.23.6\"\n")
 	file.write("\\header {{ title = \"{0}\" }}\n".format(fileName))
 	file.write("%Bar Length: {0}\n".format(numBars))
-	file.write("%Configuration: {0}\n\n".format(config.print_config()))
+	file.write("%Configuration: {0}\n\n".format(str(config)))
 
 
 	for i in range(numMusic):
@@ -63,19 +63,19 @@ def add_exercise(file, fileName, rawData, iteration = 1):
 		# write fitness scores + append to global dict
 		note_rest_ratio = fitness.note_rest_ratio(rawData)
 		fitness_scores["note_rest_ratio"].append(note_rest_ratio)
-		file.write("%\\Fitness Test (NoteToRest)= {0}\n".format(fitness.note_rest_ratio(rawData)))
+		file.write("%\\Fitness Test (NoteToRest)= {0}\n".format(note_rest_ratio))
 
 		note_length_ratio = fitness.note_length_ratio(rawData)
 		fitness_scores["note_length_ratio"].append(note_length_ratio)
-		file.write("%\\Fitness Test (NoteLength)= {0}\n".format(fitness.note_length_ratio(rawData)))
+		file.write("%\\Fitness Test (NoteLength)= {0}\n".format(note_length_ratio))
 		
 		contiguous_melody_ratio = fitness.contiguous_melody_ratio(rawData)
 		fitness_scores["contiguous_melody_ratio"].append(contiguous_melody_ratio)
-		file.write("%\\Fitness Test (Melody)= {0}\n".format(fitness.contiguous_melody_ratio(rawData)))
+		file.write("%\\Fitness Test (Melody)= {0}\n".format(contiguous_melody_ratio))
 		
 		interval_size_ratio = fitness.interval_size_ratio(rawData)
 		fitness_scores["interval_size_ratio"].append(interval_size_ratio)
-		file.write("%\\Fitness Test (IntervalSize)= {0}\n".format(fitness.interval_size_ratio(rawData)))
+		file.write("%\\Fitness Test (IntervalSize)= {0}\n".format(interval_size_ratio))
 		
 		overall_score = fitness.all_default_test(rawData)
 		fitness_scores["overall_score"].append(overall_score)
