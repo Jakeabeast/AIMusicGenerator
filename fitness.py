@@ -113,6 +113,32 @@ def test_contiguous_melody_shape_ratio(rawData):
 	
 	return 1.0 - inaccuracy
 
+def test_allowable_intervals(rawData):
+	if config is None:
+		allowedIntervals = [0, 1, 2]
+	else:
+		allowedIntervals = [config.interval_sizes_allowed]
+		
+	notesArray = rawData.noteArray
+	noteIdx = 0
+	totalIntervals = 0
+	acceptableIntervals = 0
+	totalNotes = len(notesArray)
+	while noteIdx < totalNotes - 1:
+		intervalJump = compare_note_interval(notesArray[noteIdx][0], notesArray[noteIdx + 1][0])
+
+		if intervalJump != "rest":
+			intervalJumpMag = abs(intervalJump)
+			if intervalJumpMag <= 2: acceptableIntervals += 1
+			totalIntervals += 1
+		noteIdx += 1
+
+	if totalIntervals > 0:
+		return 1.0 - acceptableIntervals / totalIntervals
+	else:
+		return 0
+
+
 def test_interval_size_ratio(rawData):
 	#interval size default to: size0 - 30%, size1 - 50%, size2 - 20% | where size is pitch jump distance from one note to the next
 	intervalPercent = {}
@@ -156,3 +182,4 @@ def compare_note_interval(note1, note2):
 		return "rest"
 	else:
 		return noteValuePair[note2] - noteValuePair[note1]
+	
