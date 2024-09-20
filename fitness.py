@@ -3,23 +3,24 @@ from config import active_config as config
 
 # take in raw data and grade it in several different fitness functions
 def all_default_test(rawData):    
-
-	# Ensure weighting adds to 1 (e.g 0.4 + 0.2 + 0.1 + 0.2 = 1)
 	try:
-		totalTestValue = note_rest_ratio(rawData) * 0.3
-		totalTestValue += note_length_ratio(rawData) * 0.3
-		totalTestValue += contiguous_melody_ratio(rawData) * 0.1
-		totalTestValue += interval_size_ratio(rawData) * 0.2
-
+		totalTestValue = 0
+		numTests = 0
+		for name, fitnessTest in globals().items():
+			if name.startswith('test_') and callable(fitnessTest):
+				testScore = fitnessTest(rawData)
+				totalTestValue += testScore
+				numTests += 1
+		
+		overallScore = totalTestValue / numTests
 
 	except Exception as e:
-		print(e)
-		return -1
+		assert(e)
 
-	return totalTestValue
+	return overallScore
 
 
-def note_rest_ratio(rawData):
+def test_note_rest_ratio(rawData):
 	# default to 10% rest amount and 90% note amount
 	targetRestDecimal = 0.10 if config is None else config.note_rest_ratio
 
@@ -34,10 +35,10 @@ def note_rest_ratio(rawData):
 
 	return 1.0 - scaledInaccuracy
 
-def note_length_ratio(rawData):
-	# default to 90% crotchet, 10% quaver, 5% other
+def test_note_length_ratio(rawData):
+	# default to 85% crotchet, 10% quaver, 5% other
 	if config is None:
-		targetCrotchetNoteDecimal = 0.90
+		targetCrotchetNoteDecimal = 0.85
 		targetQuaverNoteDecimal = 0.10
 		targetOtherNoteDecimal = 0.05
 	else:
@@ -78,7 +79,7 @@ def note_length_ratio(rawData):
 
 	return max(0, 1.0 - inaccuracy)
 
-def contiguous_melody_ratio(rawData):
+def test_contiguous_melody_ratio(rawData):
 	#default is 80% of sections is harmonic while 20% are not
 	#note: assumes harmonic section to be contiguous notes in section of (default 3) to be ascending or descending 
 	if config is None:
@@ -113,7 +114,7 @@ def contiguous_melody_ratio(rawData):
 	
 	return 1.0 - inaccuracy
 
-def testcontiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
+def samepitches_contiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
 	#contiguous notes in sections of 3
 	notesArray = rawData.noteArray
 	sectionIdx = 0
@@ -140,7 +141,7 @@ def testcontiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
 	
 	return 1.0 - inaccuracy
 
-def interval_size_ratio(rawData):
+def test_interval_size_ratio(rawData):
 	#interval size default to 50% of scale degree 2 (2 intervals apart)
 	if config is None:
 		targetIntervalDecimal = 0.5
