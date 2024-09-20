@@ -4,15 +4,15 @@ from config import active_config as config
 # take in raw data and grade it in several different fitness functions
 def all_default_test(rawData):    
 	try:
-		totalTestValue = 0
+		accumTestValue = 0
 		numTests = 0
 		for name, fitnessTest in globals().items():
 			if name.startswith('test_') and callable(fitnessTest):
 				testScore = fitnessTest(rawData)
-				totalTestValue += testScore
+				accumTestValue += testScore
 				numTests += 1
 		
-		overallScore = totalTestValue / numTests
+		overallScore = accumTestValue / numTests
 
 	except Exception as e:
 		assert(e)
@@ -79,15 +79,13 @@ def test_note_length_ratio(rawData):
 
 	return max(0, 1.0 - inaccuracy)
 
-def test_contiguous_melody_ratio(rawData):
-	#default is 80% of sections is harmonic while 20% are not
+def test_contiguous_melody_shape_ratio(rawData):
+	#default is 30% of sections is harmonic while 70% are not
 	#note: assumes harmonic section to be contiguous notes in section of (default 3) to be ascending or descending 
 	if config is None:
-		targetHarmonicDecimal = 0.8
-		harmonicSectionLength = 3
+		targetHarmonicDecimal = 0.3
 	else:
 		targetHarmonicDecimal = config.contiguous_melody_ratio[0]
-		harmonicSectionLength = config.contiguous_melody_ratio[1]
 
 	notesArray = rawData.noteArray
 	sectionIdx = 0
@@ -95,13 +93,14 @@ def test_contiguous_melody_ratio(rawData):
 	totalSections = 0
 	totalNotes = len(notesArray)
 	while sectionIdx < totalNotes - 2:
+		# compare 3 notes together: return rest if a note is a rest | return negative number if going up | positive ig going down
 		intervalJump12 = compare_note_interval(notesArray[sectionIdx][0], notesArray[sectionIdx + 1][0])
 		intervalJump23 = compare_note_interval(notesArray[sectionIdx + 1][0], notesArray[sectionIdx + 2][0])
 
 		if intervalJump12 == "rest" or intervalJump23 == "rest":
 			pass
 			totalSections -= 1
-		#multiply jump, if both are positive or negative (going up or down), result is > 0, hence harmonic
+		#multiply jump, if both are positive or negative (going up or down), result is > 0, hence harmonic shape
 		elif intervalJump12 * intervalJump23 > 0:
 			harmonicSections +=1    
 
@@ -114,65 +113,40 @@ def test_contiguous_melody_ratio(rawData):
 	
 	return 1.0 - inaccuracy
 
-def samepitches_contiguous_melody_ratio(rawData, targetHarmonicDecimal = 0.8):
-	#contiguous notes in sections of 3
-	notesArray = rawData.noteArray
-	sectionIdx = 0
-	harmonicSections = 0
-	totalSections = 0
-	totalNotes = len(notesArray)
-	while sectionIdx < totalNotes - 2:
-		intervalJump12 = compare_note_interval(notesArray[sectionIdx][0], notesArray[sectionIdx + 1][0])
-		intervalJump23 = compare_note_interval(notesArray[sectionIdx + 1][0], notesArray[sectionIdx + 2][0])
-
-		if intervalJump12 == "rest" or intervalJump23 == "rest":
-			pass
-			totalSections -= 1
-		#multiply jump, if both are positive or negative (going up or down), result is > 0, hence harmonic
-		elif intervalJump12 * intervalJump23 >= 0 and intervalJump12 + intervalJump23 != 0:
-			harmonicSections +=1    
-
-		totalSections += 1
-		sectionIdx += 1
-	try:
-		inaccuracy = abs(targetHarmonicDecimal - harmonicSections / totalSections)
-	except: 
-		return "0 Sections"
-	
-	return 1.0 - inaccuracy
-
 def test_interval_size_ratio(rawData):
-	#interval size default to 50% of scale degree 2 (2 intervals apart)
+	#interval size default to: size0 - 30%, size1 - 50%, size2 - 20% | where size is pitch jump distance from one note to the next
+	intervalPercent = {}
 	if config is None:
-		targetIntervalDecimal = 0.5
-		scaleDegree = 2
+		intervalPercent[0] = [0.3, 0]
+		intervalPercent[1] = [0.5, 0]
+		intervalPercent[2] = [0.2, 0]
 	else:
-		targetIntervalDecimal = config.interval_size_ratio[0]
-		scaleDegree = config.interval_size_ratio[1]
+		intervalPercent[0] = [config.interval_size_ratio[0], 0]
+		intervalPercent[1] = [config.interval_size_ratio[1], 0]
+		intervalPercent[2] = [config.interval_size_ratio[2], 0]
 
 	notesArray = rawData.noteArray
 	noteIdx = 0
-	appropriateIntervals = 0
 	totalIntervals = 0
 	totalNotes = len(notesArray)
 	while noteIdx < totalNotes - 2:
 		intervalJump = compare_note_interval(notesArray[noteIdx][0], notesArray[noteIdx + 1][0])
 
-		if intervalJump == "rest":
-			pass
-			totalIntervals -= 1
-		elif abs(intervalJump) <= scaleDegree:
-			appropriateIntervals += 1
-		
-		totalIntervals += 1
+		if intervalJump is not "rest":
+			intervalPercent[abs(intervalJump)][1] += 1
+			totalIntervals += 1
 		noteIdx += 1
 
-	try:
-		inaccuracy = abs(targetIntervalDecimal - appropriateIntervals / totalIntervals)
-	except: 
-		return 0 #"0 Intervals"
-	
-	return 1.0 - inaccuracy
+	accumInaccuracy = 0
+	if totalIntervals > 0:
+		#fitness = ALL (abs(targetPercent(size#) - number(size#)/total))
+		accumInaccuracy += abs(intervalPercent[0][0] - intervalPercent[0][1] / totalIntervals)
+		accumInaccuracy += abs(intervalPercent[1][0] - intervalPercent[1][1] / totalIntervals)
+		accumInaccuracy += abs(intervalPercent[2][0] - intervalPercent[2][1] / totalIntervals)
+		return 1.0 - accumInaccuracy / 3 #3 sizes tested
+
+	else:
+		return 0
 
 def compare_note_interval(note1, note2):
 	#return positive if going up, negative if going down, rest if comparing note to a rest
