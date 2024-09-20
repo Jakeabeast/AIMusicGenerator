@@ -129,11 +129,12 @@ def test_interval_size_ratio(rawData):
 	noteIdx = 0
 	totalIntervals = 0
 	totalNotes = len(notesArray)
-	while noteIdx < totalNotes - 2:
+	while noteIdx < totalNotes - 1:
 		intervalJump = compare_note_interval(notesArray[noteIdx][0], notesArray[noteIdx + 1][0])
 
-		if intervalJump is not "rest":
-			intervalPercent[abs(intervalJump)][1] += 1
+		if intervalJump != "rest":
+			intervalJumpMag = abs(intervalJump)
+			if intervalJumpMag <= 2: intervalPercent[intervalJumpMag][1] += 1 
 			totalIntervals += 1
 		noteIdx += 1
 
