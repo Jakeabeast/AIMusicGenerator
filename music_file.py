@@ -9,7 +9,8 @@ fitness_scores = {
 	"note_rest_ratio": [],
 	"note_length_ratio" : [],
 	"contiguous_melody_ratio" : [],
-	"interval_size_ratio" : []
+	"interval_size_ratio" : [],
+	"allowable_interval_size" : []
 }
 overall_score_array = []
 
@@ -61,21 +62,25 @@ def add_exercise(file, fileName, rawData, iteration = 1):
 		Lilypond(rawData, file, fileName)
 
 		# write fitness scores + append to global dict
-		note_rest_ratio = fitness.note_rest_ratio(rawData)
+		note_rest_ratio = fitness.test_note_rest_ratio(rawData)
 		fitness_scores["note_rest_ratio"].append(note_rest_ratio)
 		file.write("%\\Fitness Test (NoteToRest)= {0}\n".format(note_rest_ratio))
 
-		note_length_ratio = fitness.note_length_ratio(rawData)
+		note_length_ratio = fitness.test_note_length_ratio(rawData)
 		fitness_scores["note_length_ratio"].append(note_length_ratio)
 		file.write("%\\Fitness Test (NoteLength)= {0}\n".format(note_length_ratio))
 		
-		contiguous_melody_ratio = fitness.contiguous_melody_ratio(rawData)
+		contiguous_melody_ratio = fitness.test_contiguous_melody_shape_ratio(rawData)
 		fitness_scores["contiguous_melody_ratio"].append(contiguous_melody_ratio)
 		file.write("%\\Fitness Test (Melody)= {0}\n".format(contiguous_melody_ratio))
 		
-		interval_size_ratio = fitness.interval_size_ratio(rawData)
+		interval_size_ratio = fitness.test_interval_size_ratio(rawData)
 		fitness_scores["interval_size_ratio"].append(interval_size_ratio)
 		file.write("%\\Fitness Test (IntervalSize)= {0}\n".format(interval_size_ratio))
+
+		allowable_interval_size = fitness.test_allowable_intervals(rawData)
+		fitness_scores["allowable_interval_size"].append(allowable_interval_size)
+		file.write("%\\Fitness Test (IntervalSizesAllowed)= {0}\n".format(allowable_interval_size))
 		
 		overall_score = fitness.all_default_test(rawData)
 		fitness_scores["overall_score"].append(overall_score)
