@@ -8,7 +8,7 @@ bar_color = ["#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000", "
 
 
 def draw():
-    fig, axes = plt.subplots(3, 2, figure=(12,4))
+    fig, axes = plt.subplots(3, 3, figure=(12,4))
     plt.subplots_adjust(hspace = 0.4)
     fig.suptitle("Scores of Generated Music Pieces!!")
 
@@ -23,20 +23,25 @@ def draw():
     axes[1][0].set_xlabel('Data1 Score Value')
 
     #subplot 3
-    _, _, patches3 = axes[2][0].hist(fitness_scores["note_length_ratio"], bins=y_axis_range, edgecolor='black')
-    axes[2][0].set_title('Scores of Generated Music Pieces (note_length_ratio)')
-    axes[2][0].set_xlabel('Data2 Score Value')
-
-    #subplot 4
-    _, _, patches4 = axes[0][1].hist(fitness_scores["contiguous_melody_ratio"], bins=y_axis_range, edgecolor='black')
-    axes[0][1].set_title('Scores of Generated Music Pieces (contiguous_melody_ratio)')
-    axes[0][1].set_xlabel('Data2 Score Value')
-
-    #subplot 5
-    _, _, patches5 = axes[1][1].hist(fitness_scores["interval_size_ratio"], bins=y_axis_range, edgecolor='black')
-    axes[1][1].set_title('Scores of Generated Music Pieces (interval_size_ratio)')
+    _, _, patches3 = axes[1][1].hist(fitness_scores["note_length_ratio"], bins=y_axis_range, edgecolor='black')
+    axes[1][1].set_title('Scores of Generated Music Pieces (note_length_ratio)')
     axes[1][1].set_xlabel('Data2 Score Value')
 
+    #subplot 4
+    _, _, patches4 = axes[1][2].hist(fitness_scores["contiguous_melody_ratio"], bins=y_axis_range, edgecolor='black')
+    axes[1][2].set_title('Scores of Generated Music Pieces (contiguous_melody_ratio)')
+    axes[1][2].set_xlabel('Data2 Score Value')
+
+    #subplot 5
+    _, _, patches5 = axes[2][0].hist(fitness_scores["interval_size_ratio"], bins=y_axis_range, edgecolor='black')
+    axes[2][0].set_title('Scores of Generated Music Pieces (interval_size_ratio)')
+    axes[2][0].set_xlabel('Data2 Score Value')
+
+    #subplot 6
+    _, _, patches6 = axes[2][1].hist(fitness_scores["allowable_interval_size"], bins=y_axis_range, edgecolor='black')
+    axes[2][1].set_title('Scores of Generated Music Pieces (allowable_interval_size)')
+    axes[2][1].set_xlabel('Data2 Score Value')
+    
     #get max ylimit
     ylims = []
     for ax1 in axes:
@@ -55,6 +60,7 @@ def draw():
         patches3[i].set_facecolor(bar_color[i])
         patches4[i].set_facecolor(bar_color[i])
         patches5[i].set_facecolor(bar_color[i])
+        patches6[i].set_facecolor(bar_color[i])
 
 
     plt.show()
