@@ -14,13 +14,16 @@ class Config:
 		percentage of harmonic sections (e.g [0.8, 3] indicates 80% of harmonic sections of length 3) note-leave list[1] = 3 please.
 	interval_size_ratio : list[2]
 		percentage of appropriate interval size (e.g [0.5, 2] indicates 50% of interval jumps are 2 pitches or less apart)
+	interval_sizes_allowed : list[any]
+		what intervals sizes are allowed (e.g [0, 1, 2] indicates pitch jumps of 0 - 2 are allowed)
 	"""
 
-	def __init__(self, c1:int = None , c2:list[3] = None, c3:list[2] = None, c4:list[2] = None):
+	def __init__(self, c1:int = None , c2:list[3] = None, c3:list[2] = None, c4:list[3] = None, c5:list = None):
 		self.note_rest_ratio = c1 
 		self.note_length_ratio = c2
 		self.contiguous_melody_ratio = c3
 		self.interval_size_ratio = c4
+		self.interval_sizes_allowed = c5
 	
 	def print_config(self):
 		print("%s, %s, %s, %s" % (self.note_rest_ratio, self.note_length_ratio, self.contiguous_melody_ratio, self.interval_size_ratio))
@@ -30,7 +33,4 @@ class Config:
 
 
 
-configV1 = Config(0.1, [0.9, 0.1, 0.05], [0.8, 3], [0.5, 2])
-
-
-active_config = configV1
+configV1 = Config(0.1, [0.9, 0.1, 0.05], [0.3], [0.3, 0.5, 0.2], [0, 1, 2])

@@ -117,7 +117,7 @@ def test_allowable_intervals(rawData):
 	if config is None:
 		allowedIntervals = [0, 1, 2]
 	else:
-		allowedIntervals = [config.interval_sizes_allowed]
+		allowedIntervals = config.interval_sizes_allowed
 		
 	notesArray = rawData.noteArray
 	noteIdx = 0
@@ -129,7 +129,7 @@ def test_allowable_intervals(rawData):
 
 		if intervalJump != "rest":
 			intervalJumpMag = abs(intervalJump)
-			if intervalJumpMag <= 2: acceptableIntervals += 1
+			if intervalJumpMag in allowedIntervals: acceptableIntervals += 1
 			totalIntervals += 1
 		noteIdx += 1
 
