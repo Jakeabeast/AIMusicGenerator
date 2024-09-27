@@ -1,5 +1,6 @@
-from music import UnrefinedMusic, Lilypond
-from config import active_config as config
+from music_generation import UnrefinedMusicPiece
+from music_conversion import Lilypond
+from config import configFitness
 import fitness
 import random
 
@@ -28,7 +29,7 @@ def create_file(numMusic, numBars, fileName = "test", seed = None):
 
 
 	for i in range(numMusic):
-		rawData = UnrefinedMusic(seed = seed, bars = numBars)
+		rawData = UnrefinedMusicPiece(seed = seed, bars = numBars)
 		score = add_exercise(file, fileName, rawData, i)
 		overall_score_array.append(score)
 
@@ -44,7 +45,7 @@ def create_sorted_file(seeds, numBars, fitnessName, fileName = "test"):
 	file.write("%Bar Length: {0}\n\n".format(numBars))
 
 	for i in range(len(seeds)):
-		rawData = UnrefinedMusic(seed = seeds[i], bars = numBars)
+		rawData = UnrefinedMusicPiece(seed = seeds[i], bars = numBars)
 		add_exercise(file, fileName, rawData, i)
 
 	file.close()
@@ -82,7 +83,7 @@ def add_exercise(file, fileName, rawData, iteration = 1):
 		fitness_scores["allowable_interval_size"].append(allowable_interval_size)
 		file.write("%\\Fitness Test (IntervalSizesAllowed)= {0}\n".format(allowable_interval_size))
 		
-		overall_score = fitness.all_default_test(rawData)
+		overall_score = fitness.all_default_tests(rawData)
 		fitness_scores["overall_score"].append(overall_score)
 		file.write("%\\Fitness Test (Overall)= {0}\n\n\n".format(overall_score))
 		return overall_score

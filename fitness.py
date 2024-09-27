@@ -1,32 +1,35 @@
-from config import active_config as config
+from config import configFitness
 
 
 # take in raw data and grade it in several different fitness functions
-def all_default_test(rawData):    
-	try:
-		accumTestValue = 0
-		numTests = 0
-		for name, fitnessTest in globals().items():
-			if name.startswith('test_') and callable(fitnessTest):
-				testScore = fitnessTest(rawData)
-				accumTestValue += testScore
-				numTests += 1
-		
-		overallScore = accumTestValue / numTests
+def all_default_tests(musicData):
+	fitness = {
+	"overall_score" : None,
+	"note_rest_ratio": None,
+	"note_length_ratio" : None,
+	"contiguous_melody_ratio" : None,
+	"interval_size_ratio" : None,
+	"allowable_interval_size" : None
+	}
 
-	except Exception as e:
-		assert(e)
+	fitness["note_rest_ratio"] = test_note_rest_ratio(musicData)
+	fitness["note_length_ratio"] = test_note_length_ratio(musicData)
+	fitness["contiguous_melody_ratio"] = test_contiguous_melody_shape_ratio(musicData)
+	fitness["interval_size_ratio"] = test_allowable_intervals(musicData)
+	fitness["allowable_interval_size"] = test_interval_size_ratio(musicData)
 
-	return overallScore
+	fitness["overall_score"] = (fitness["note_rest_ratio"] + fitness["note_length_ratio"] + fitness["contiguous_melody_ratio"] \
+							 + fitness["interval_size_ratio"] + fitness["allowable_interval_size"]) / 5
+
+	return fitness
 
 
-def test_note_rest_ratio(rawData):
-	# default to 10% rest amount and 90% note amount
-	targetRestDecimal = 0.10 if config is None else config.note_rest_ratio
+def test_note_rest_ratio(musicData):
+	targetRestDecimal = configFitness["note_rest_ratio"]
 
 	restCount = 0; 
-	totalBeats = rawData.numberOfBars * rawData.timeSig[1]; 
-	for element in rawData.noteArray: 
+	totalBeats = musicData["bars"] * musicData["timeSig"][1]; 
+	for element in musicData["noteArray"]: 
 		if element[0] == "rest": 
 			restCount += 1 
 
@@ -35,16 +38,10 @@ def test_note_rest_ratio(rawData):
 
 	return 1.0 - scaledInaccuracy
 
-def test_note_length_ratio(rawData):
-	# default to 85% crotchet, 10% quaver, 5% other
-	if config is None:
-		targetCrotchetNoteDecimal = 0.85
-		targetQuaverNoteDecimal = 0.10
-		targetOtherNoteDecimal = 0.05
-	else:
-		targetCrotchetNoteDecimal = config.note_length_ratio[0]
-		targetQuaverNoteDecimal = config.note_length_ratio[1]
-		targetOtherNoteDecimal = config.note_length_ratio[2]
+def test_note_length_ratio(musicData):
+	targetCrotchetNoteDecimal = configFitness["note_length_ratio"][0]
+	targetQuaverNoteDecimal = configFitness["note_length_ratio"][1]
+	targetOtherNoteDecimal = configFitness["note_length_ratio"][2]
 
 	semibreveBeats = 0
 	dottedMinimBeats = 0
@@ -52,7 +49,7 @@ def test_note_length_ratio(rawData):
 	crotchetBeats = 0
 	quaverBeats = 0
 	totalBeats = 0
-	for element in rawData.noteArray:
+	for element in musicData["noteArray"]:
 		if element[2] == "semibreve":
 			semibreveBeats += 4
 			totalBeats += 4
@@ -79,15 +76,11 @@ def test_note_length_ratio(rawData):
 
 	return max(0, 1.0 - inaccuracy)
 
-def test_contiguous_melody_shape_ratio(rawData):
-	#default is 30% of sections is harmonic while 70% are not
+def test_contiguous_melody_shape_ratio(musicData):
 	#note: assumes harmonic section to be contiguous notes in section of (default 3) to be ascending or descending 
-	if config is None:
-		targetHarmonicDecimal = 0.3
-	else:
-		targetHarmonicDecimal = config.contiguous_melody_ratio[0]
+	targetHarmonicDecimal = configFitness["contiguous_melody_shape_ratio"]
 
-	notesArray = rawData.noteArray
+	notesArray = musicData["noteArray"]
 	sectionIdx = 0
 	harmonicSections = 0
 	totalSections = 0
@@ -113,13 +106,10 @@ def test_contiguous_melody_shape_ratio(rawData):
 	
 	return 1.0 - inaccuracy
 
-def test_allowable_intervals(rawData):
-	if config is None:
-		allowedIntervals = [0, 1, 2]
-	else:
-		allowedIntervals = config.interval_sizes_allowed
+def test_allowable_intervals(musicData):
+	allowedIntervals =  configFitness["interval_sizes_allowed"]
 		
-	notesArray = rawData.noteArray
+	notesArray = musicData["noteArray"]
 	noteIdx = 0
 	totalIntervals = 0
 	acceptableIntervals = 0
@@ -139,19 +129,15 @@ def test_allowable_intervals(rawData):
 		return 0
 
 
-def test_interval_size_ratio(rawData):
+def test_interval_size_ratio(musicData):
 	#interval size default to: size0 - 30%, size1 - 50%, size2 - 20% | where size is pitch jump distance from one note to the next
 	intervalPercent = {}
-	if config is None:
-		intervalPercent[0] = [0.3, 0]
-		intervalPercent[1] = [0.5, 0]
-		intervalPercent[2] = [0.2, 0]
-	else:
-		intervalPercent[0] = [config.interval_size_ratio[0], 0]
-		intervalPercent[1] = [config.interval_size_ratio[1], 0]
-		intervalPercent[2] = [config.interval_size_ratio[2], 0]
+	intervalPercent[0] = [configFitness["interval_size_ratio"][0], 0]
+	intervalPercent[1] = [configFitness["interval_size_ratio"][1], 0]
+	intervalPercent[2] = [configFitness["interval_size_ratio"][2], 0]
 
-	notesArray = rawData.noteArray
+
+	notesArray = musicData["noteArray"]
 	noteIdx = 0
 	totalIntervals = 0
 	totalNotes = len(notesArray)

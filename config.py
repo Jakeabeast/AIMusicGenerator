@@ -1,36 +1,43 @@
-active_config = None
 
-class Config:
-	"""
-	Add configuration for the different fitness parameters
-
-	Musical Characteristics/Attributes
-	----------
-	note_rest_ratio : int 
-		decimal percentage of rests to notes (e.g 0.15 indicates 15% rest to 85% notes)
-	note_length_ratio: list[3]
-		percentage distribution of the note lengths (e.g [0.7, 0.2, 0.1] indicate 70% quarter - 20% half - 10% whole notes)
-	contiguous_melody_ratio : list[2]
-		percentage of harmonic sections (e.g [0.8, 3] indicates 80% of harmonic sections of length 3) note-leave list[1] = 3 please.
-	interval_size_ratio : list[2]
-		percentage of appropriate interval size (e.g [0.5, 2] indicates 50% of interval jumps are 2 pitches or less apart)
-	interval_sizes_allowed : list[any]
-		what intervals sizes are allowed (e.g [0, 1, 2] indicates pitch jumps of 0 - 2 are allowed)
-	"""
-
-	def __init__(self, c1:int = None , c2:list[3] = None, c3:list[2] = None, c4:list[3] = None, c5:list = None):
-		self.note_rest_ratio = c1 
-		self.note_length_ratio = c2
-		self.contiguous_melody_ratio = c3
-		self.interval_size_ratio = c4
-		self.interval_sizes_allowed = c5
-	
-	def print_config(self):
-		print("%s, %s, %s, %s" % (self.note_rest_ratio, self.note_length_ratio, self.contiguous_melody_ratio, self.interval_size_ratio))
-
-	def __str__(self):
-		return "%s, %s, %s, %s" % (self.note_rest_ratio, self.note_length_ratio, self.contiguous_melody_ratio, self.interval_size_ratio)
+"""
+Musical Characteristics/Attributes
+----------
+note_rest_ratio : int 
+	decimal percentage of rests to notes (e.g 0.15 indicates 15% rest to 85% notes)
+note_length_ratio: list[3]
+	percentage distribution of the note lengths (e.g [0.7, 0.2, 0.1] indicate 70% crotchet - 20% quaver - 10% other)
+contiguous_melody_ratio : list[2]
+	percentage of harmonic sections (e.g [0.5] indicates 50% of harmonic sections of length 3) [3 is default]
+interval_size_ratio : list[2]
+	percentage of appropriate interval size (e.g [0.2, 0.5, 0.3] indicates 20% pitch is same size, 50% is one size apart, 30% is of two size apart
+interval_sizes_allowed : list[any]
+	what intervals sizes are allowed (e.g [0, 1, 2] indicates pitch jumps of 0 - 2 are allowed)
+"""
+configFitness = {
+	"note_rest_ratio" : 0.1, 
+	"note_length_ratio" : [0.85, 0.10, 0.05],
+	"contiguous_melody_shape_ratio" : 0.3,
+	"interval_sizes_allowed" : [0, 1, 2], 
+	"interval_size_ratio" : [0.3, 0.5, 0.2]
+}
 
 
-
-configV1 = Config(0.1, [0.9, 0.1, 0.05], [0.3], [0.3, 0.5, 0.2], [0, 1, 2])
+"""
+Genetic Algorithm Parameters
+----------
+numberBars : int
+	how many bars in a piece of music
+populationSize : int
+	how big is a population sample before regenerating a new population
+mutationChance : int
+	percentage chance of a child to be mutated 
+terminationNumber : int
+	how many times population is recreated without any improvement to best candidate
+"""
+configGenetic = {
+	"numberBars" : 16,
+    "numberElites" : 1,
+	"populationSize" : 50,
+	"mutationChance" : 1,
+	"terminationNumber" : 10
+}
