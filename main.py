@@ -74,7 +74,7 @@ if __name__ == "__main__":
 	#best Candidate is first item in newPopulation which is sorted by overall_fitness_score
 	bestCandidate = newPopulation[0]
 
-	Lilypond(bestCandidate[0])
+	#Lilypond(bestCandidate[0])
 
 
 	#draw graph of created file

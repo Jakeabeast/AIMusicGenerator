@@ -37,7 +37,7 @@ terminationNumber : int
 configGenetic = {
 	"numberBars" : 16,
     "numberElites" : 1,
-	"populationSize" : 50,
+	"populationSize" : 100,
 	"mutationChance" : 1,
-	"terminationNumber" : 10
+	"terminationNumber" : 20
 }

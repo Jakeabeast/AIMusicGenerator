@@ -56,7 +56,7 @@ class UnrefinedMusicPiece:
 				remainingBeatsInBar = self.timeSig[1]
 				barCount += 1
 
-		print(musicArray)
+		#print(musicArray) #shows data strcuture of music piece 
 		return musicArray
 
 def generate_initial_population(config):

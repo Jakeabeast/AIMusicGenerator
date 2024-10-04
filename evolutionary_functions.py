@@ -56,7 +56,7 @@ def mutation_pitch_change(child, noteAmount, idx):
 	if mutationType == 0:
 		bool = True
 		while bool:
-			if child[idx][0] != 'rest':
+			if child[idx-1][0] != 'rest':
 				note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
 				while note == child[idx][0]:
 					note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
@@ -64,3 +64,4 @@ def mutation_pitch_change(child, noteAmount, idx):
 			else:
 				idx += 1
 				if idx > noteAmount: idx = 0
+				
