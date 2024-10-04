@@ -27,8 +27,10 @@ if __name__ == "__main__":
 			newPopulation.append(oldPopulation[i])
 
 		while len(newPopulation) <= configGenetic["terminationNumber"]:
+			paretoFrontSample = paretoSelection(oldPopulation)
 			#selection parents from previous population
-			parent1, parent2 = paretoSelection(oldPopulation)
+			parent1 = random.choice(paretoFrontSample)
+			parent2 = random.choice(paretoFrontSample)
 			#do crossover on parents to create children (only note array of children)
 			child1, child2 = uniformCrossOver(parent1[0]["noteArray"], parent2[0]["noteArray"])
 
