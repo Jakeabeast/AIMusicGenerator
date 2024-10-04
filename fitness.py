@@ -106,60 +106,54 @@ def test_contiguous_melody_shape_ratio(musicData):
 	
 	return 1.0 - inaccuracy
 
-def test_allowable_intervals(musicData):
-	allowedIntervals =  configFitness["interval_sizes_allowed"]
-		
-	notesArray = musicData["noteArray"]
-	noteIdx = 0
-	totalIntervals = 0
-	acceptableIntervals = 0
-	totalNotes = len(notesArray)
-	while noteIdx < totalNotes - 1:
-		intervalJump = compare_note_interval(notesArray[noteIdx][0], notesArray[noteIdx + 1][0])
-
-		if intervalJump != "rest":
-			intervalJumpMag = abs(intervalJump)
-			if intervalJumpMag in allowedIntervals: acceptableIntervals += 1
-			totalIntervals += 1
-		noteIdx += 1
-
-	if totalIntervals > 0:
-		return 1.0 - acceptableIntervals / totalIntervals
-	else:
-		return 0
+def test_allowable_intervals(musicData, soft_penalty=False):
+    allowedIntervals = configFitness["interval_sizes_allowed"]
+    notesArray = musicData["noteArray"]
+    totalIntervals = 0
+    acceptableIntervals = 0
+    for noteIdx in range(len(notesArray) - 1):
+        intervalJump = compare_note_interval(notesArray[noteIdx][0], notesArray[noteIdx + 1][0])
+        if intervalJump != "rest":
+            intervalJumpMag = abs(intervalJump)
+            if intervalJumpMag in allowedIntervals:
+                acceptableIntervals += 1
+            elif soft_penalty:
+                acceptableIntervals += 0.5  # Less harsh penalty for close intervals
+            totalIntervals += 1
+ 
+    if totalIntervals > 0:
+        return 1.0 - (totalIntervals - acceptableIntervals) / totalIntervals
+    else:
+        return 0
 
 
-def test_interval_size_ratio(musicData):
-	#interval size default to: size0 - 30%, size1 - 50%, size2 - 20% | where size is pitch jump distance from one note to the next
-	intervalPercent = {}
-	intervalPercent[0] = [configFitness["interval_size_ratio"][0], 0]
-	intervalPercent[1] = [configFitness["interval_size_ratio"][1], 0]
-	intervalPercent[2] = [configFitness["interval_size_ratio"][2], 0]
-
-
-	notesArray = musicData["noteArray"]
-	noteIdx = 0
-	totalIntervals = 0
-	totalNotes = len(notesArray)
-	while noteIdx < totalNotes - 1:
-		intervalJump = compare_note_interval(notesArray[noteIdx][0], notesArray[noteIdx + 1][0])
-
-		if intervalJump != "rest":
-			intervalJumpMag = abs(intervalJump)
-			if intervalJumpMag <= 2: intervalPercent[intervalJumpMag][1] += 1 
-			totalIntervals += 1
-		noteIdx += 1
-
-	accumInaccuracy = 0
-	if totalIntervals > 0:
-		#fitness = ALL (abs(targetPercent(size#) - number(size#)/total))
-		accumInaccuracy += abs(intervalPercent[0][0] - intervalPercent[0][1] / totalIntervals)
-		accumInaccuracy += abs(intervalPercent[1][0] - intervalPercent[1][1] / totalIntervals)
-		accumInaccuracy += abs(intervalPercent[2][0] - intervalPercent[2][1] / totalIntervals)
-		return 1.0 - accumInaccuracy / 3 #3 sizes tested
-
-	else:
-		return 0
+def test_interval_size_ratio(musicData, tolerance=0.05):
+    #interval size default to: size0 - 30%, size1 - 50%, size2 - 20%
+    intervalPercent = {0: [configFitness["interval_size_ratio"][0], 0],
+                       1: [configFitness["interval_size_ratio"][1], 0],
+                       2: [configFitness["interval_size_ratio"][2], 0]}
+ 
+    notesArray = musicData["noteArray"]
+    totalIntervals = 0
+    for noteIdx in range(len(notesArray) - 1):
+        intervalJump = compare_note_interval(notesArray[noteIdx][0], notesArray[noteIdx + 1][0])
+        if intervalJump != "rest":
+            intervalJumpMag = abs(intervalJump)
+            if intervalJumpMag <= 2:  # Only considering interval sizes 0, 1, 2
+                intervalPercent[intervalJumpMag][1] += 1 
+            totalIntervals += 1
+ 
+    if totalIntervals > 0:
+        accumInaccuracy = 0
+        for i in range(3):
+            target = intervalPercent[i][0]
+            actual = intervalPercent[i][1] / totalIntervals
+            # Apply tolerance so small deviations aren't penalized too harshly
+            if abs(target - actual) > tolerance:
+                accumInaccuracy += abs(target - actual)
+        return 1.0 - accumInaccuracy / 3  # Return fitness score
+    else:
+        return 0
 
 def compare_note_interval(note1, note2):
 	#return positive if going up, negative if going down, rest if comparing note to a rest
