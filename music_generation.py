@@ -22,19 +22,31 @@ class UnrefinedMusicPiece:
 		remainingSong = self.numberOfBars * self.timeSig[1] #4 bars in common time makes 4 * 4 = 16 beats
 		remainingBeatsInBar = self.timeSig[1]
 		barCount = 1
+		prevNotePitch = None
+
+		weightingGuide = { 	'a' : [3, 4, 2, 1, 1, 1, 1],
+							'b' : [4, 3, 4, 2, 1, 1, 1],
+							'c' : [2, 4, 3, 4, 2, 1, 1],
+							'd' : [1, 2, 4, 3, 4, 2, 1],
+							'e' : [1, 1, 2, 4, 3, 4, 2],
+							'f' : [1, 1, 1, 2, 4, 3, 4],
+							'g' : [1, 1, 1, 1, 2, 4, 3],
+							None: [1, 1, 1, 1, 1, 1, 1] }
 
 		random.seed(self.seed)
 		while remainingSong > 0:
-			element = random.choices(("note", "rest"), weights=(90,10))[0] #(90% - notes, 10% - rests)
+			element = random.choices(("note", "rest"), weights=(90,10))[0] #weighting on initial population helps gives direction
 
 			if (element == "rest"):
 				note = "rest"
+				prevNotePitch = None
 				accidental = ""
 				duration = ["crotchet", 1] #only quarter rests for now
 
 
 			elif (element == "note"):
-				note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
+				note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'], weights = weightingGuide[prevNotePitch])[0]
+				prevNotePitch = note
 				accidental = "natural" #add different accidentals later
 					
 				if remainingBeatsInBar >= 4:
