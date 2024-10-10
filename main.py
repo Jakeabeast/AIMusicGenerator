@@ -1,5 +1,5 @@
 from music_generation import generate_initial_population
-from evolutionary_functions import paretoSelection, uniformCrossOver, mutatePiece
+from evolutionary_functions import paretoFrontWeighting, uniformCrossOver, mutatePiece
 from music_conversion import Lilypond
 from fitness import all_default_tests
 import music_file
@@ -21,7 +21,7 @@ if __name__ == "__main__":
 		#copy previous population into this generations "oldPopulation"
 		oldPopulation = newPopulation
 		newPopulation = []
-		paretoFrontSample = None
+		paretoFront = None
 
 		#add elites into new population
 		for i in range(configGenetic["numberElites"]):
@@ -29,11 +29,12 @@ if __name__ == "__main__":
 
 		while len(newPopulation) <= configGenetic["terminationNumber"]:
 			#paretoFront only created once per generation
-			if not paretoFrontSample:
-				paretoFrontSample= paretoSelection(oldPopulation)
-			#selection parents from previous population of paretoFront
-			parent1 = random.choice(paretoFrontSample)
-			parent2 = random.choice(paretoFrontSample)
+			if not paretoFront:
+				paretoFront= paretoFrontWeighting(oldPopulation)
+			#select parents from previous population using the paretoFront weighting
+			parent1, parent2 = random.choices(range(0,len(oldPopulation)), weights=paretoFront, k=2)
+			parent1 = oldPopulation[parent1]
+			parent2 = oldPopulation[parent2]
 			#do crossover on parents to create children (only note array of children)
 			child1, child2 = uniformCrossOver(parent1[0]["noteArray"], parent2[0]["noteArray"])
 

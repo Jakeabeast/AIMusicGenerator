@@ -1,46 +1,25 @@
 import random
 from config import configGenetic
  
-def paretoSelection(musicPopulation, elitism_rate=0.1):
-    pareto_front = []
- 
-    # Calculate fitness values from the musicPopulation
-    fitnessValues = []
-    for musicPiece in musicPopulation:
-        fitnessValues.append(musicPiece[1])  # Assuming musicPiece[1][0] holds the fitness score or values
- 
-    population_size = len(musicPopulation)
-    num_elites = max(1, int(elitism_rate * population_size))
+def paretoFrontWeighting(musicPopulation):
+    weighting = []
  
     # Identify non-dominated individuals (Pareto front)
-    for i, individual in enumerate(musicPopulation):
-        dominated = False
-        for j, competitor in enumerate(musicPopulation):
-            if i != j and dominates(fitnessValues[j], fitnessValues[i]):
-                dominated = True
-                break
-        if not dominated:
-            pareto_front.append(individual)
- 
-    # Select elites based on overall fitness score (for stability)
-    sorted_population = sorted(musicPopulation, key=lambda ind: ind[1]["overall_score"], reverse=True)
-    elites = sorted_population[:num_elites]
- 
-    # Select additional individuals from the Pareto front
-    pareto_selection_size = max(0, 2 - num_elites)
-    if len(pareto_front) >= pareto_selection_size:
-        selected_from_pareto = random.sample(pareto_front, pareto_selection_size)
-    else:
-        selected_from_pareto = random.sample(musicPopulation, pareto_selection_size)
- 
-    # Return the elites combined with individuals from the Pareto front
-    return elites + selected_from_pareto
+    for individual in musicPopulation:
+        candidatesDominated = 0
+        for competitor in musicPopulation:
+            #if i isn't checking itself and dominates j, add 1 to domination number
+            if individual != competitor and dominates(individual[1], competitor[1]):
+                candidatesDominated += 1
+        weighting.append(candidatesDominated + 1) #+1 to give chance to candidates who dominated no-one (adds minimized diversity)
+
+    return weighting
  
 # Helper function to check if one individual dominates another
 def dominates(individualA, individualB, tolerance=0.01):
     try:
-        better_in_all = all(float(a) >= float(b) - tolerance for a, b in zip(individualA, individualB))
-        strictly_better_in_one = any(float(a) > float(b) + tolerance for a, b in zip(individualA, individualB))
+        better_in_all = all(float(a) >= float(b) - tolerance for a, b in zip(individualA.values(), individualB.values()))
+        strictly_better_in_one = any(float(a) > float(b) + tolerance for a, b in zip(individualA.values(), individualB.values()))
     except ValueError:
         print(f"Non-numeric value found in {individualA} or {individualB}")
         return False
@@ -95,7 +74,7 @@ def mutation_pitch_change(child, noteAmount, idx):
         while bool:
             if child[idx-1][0] != 'rest':
                 note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
-                while note == child[idx][0]:
+                while note == child[idx-1][0]:
                     note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
                 bool = False
             else:
