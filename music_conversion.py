@@ -1,28 +1,25 @@
 class Lilypond:
 	#contructor
-	def __init__(self, rawData, file, fileName = "test"):
-		self.numberOfBars = rawData.numberOfBars
-		self.timeSig = rawData.timeSig
-		self.clef = rawData.clef
-		self.keySig = rawData.keySig
-		self.refinedNotes = self.refine_music_notes(rawData)
-
-		self.text_file(file, fileName)
+	def __init__(self, rawData):
+		self.numberOfBars = rawData[0]["bars"]
+		self.timeSig = rawData[0]["timeSig"]
+		self.clef = rawData[0]["clef"]
+		self.keySig = rawData[0]["keySig"]
+		self.refinedNotes = self.refine_music_notes(rawData[0]["noteArray"])
 
 	#accessors
 	def get_refinedMusic(self):
 		return self.refinedNotes
 
 	#methods     
-	def refine_music_notes(self, rawData):
+	def refine_music_notes(self, noteArray):
 		remainingBeatsInBar = self.timeSig[1]
-		raw_data_array = rawData.noteArray
 		refined_notes_array = []
 
-		for i in range(len(raw_data_array)):
-			note = self.convert_note(raw_data_array[i][0])
-			accidental = self.convert_accidental(raw_data_array[i][1])
-			duration = self.convert_duration(raw_data_array[i][2])
+		for i in range(len(noteArray)):
+			note = self.convert_note(noteArray[i][0])
+			accidental = self.convert_accidental(noteArray[i][1])
+			duration = self.convert_duration(noteArray[i][2])
 
 			if duration > remainingBeatsInBar:
 				assert("error, notes shouldn't tie over")
@@ -32,8 +29,6 @@ class Lilypond:
 				
 			if remainingBeatsInBar <= 0:
 				remainingBeatsInBar = self.timeSig[1]
-
-		
 
 		return refined_notes_array
 
@@ -80,8 +75,9 @@ class Lilypond:
 			return "8"
 		else:
 			return "ERROR, REPORT ME" 
-		
-	def text_file(self, file, fileName):
+	
+	#formats and returns string of the notes in Lilypond format
+	def format(self):
 		text = "{ "
 		text += "\\time " + str(self.timeSig[0]) + "/" + str(self.timeSig[1]) + " "
 		text += "\\clef " + self.clef.lower() + " "
@@ -91,10 +87,8 @@ class Lilypond:
 			text += self.format_notes(self.refinedNotes[i])
 
 		text += "}\n"
-		from music_file import FILE_TYPE
-		file.write(text)
 
-		#print(text) #comment out to stop showing in terminal
+		return text
 
 	def format_notes(self, noteArray):
 		noteText = noteArray[0] #note
