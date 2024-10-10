@@ -21,14 +21,17 @@ if __name__ == "__main__":
 		#copy previous population into this generations "oldPopulation"
 		oldPopulation = newPopulation
 		newPopulation = []
+		paretoFrontSample = None
 
 		#add elites into new population
 		for i in range(configGenetic["numberElites"]):
 			newPopulation.append(oldPopulation[i])
 
 		while len(newPopulation) <= configGenetic["terminationNumber"]:
-			paretoFrontSample = paretoSelection(oldPopulation)
-			#selection parents from previous population
+			#paretoFront only created once per generation
+			if not paretoFrontSample:
+				paretoFrontSample= paretoSelection(oldPopulation)
+			#selection parents from previous population of paretoFront
 			parent1 = random.choice(paretoFrontSample)
 			parent2 = random.choice(paretoFrontSample)
 			#do crossover on parents to create children (only note array of children)
@@ -76,7 +79,9 @@ if __name__ == "__main__":
 	#best Candidate is first item in newPopulation which is sorted by overall_fitness_score
 	bestCandidate = newPopulation[0]
 
-	#Lilypond(bestCandidate[0])
+	obj = Lilypond(bestCandidate)
+	text = obj.format()
+	print(text)
 
 
 	#draw graph of created file
