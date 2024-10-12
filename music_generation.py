@@ -12,6 +12,7 @@ class UnrefinedMusicPiece:
 		self.timeSig = timeSignature # [beats per bar, value per beat]
 		self.noteArray = self.raw_music()
 
+
 	#accessors
 	def seed_str(self):
 		return str(self.seed)
@@ -24,13 +25,14 @@ class UnrefinedMusicPiece:
 		barCount = 1
 		prevNotePitch = None
 
-		weightingGuide = { 	'a' : [3, 4, 2, 1, 1, 1, 1],
-							'b' : [4, 3, 4, 2, 1, 1, 1],
+		weightingGuide = { 	'a' : [3, 4, 2, 1, 1, 2, 4],
+							'b' : [4, 3, 4, 2, 1, 1, 2],
 							'c' : [2, 4, 3, 4, 2, 1, 1],
+							'C' : [2, 4, 3, 4, 2, 1, 1],
 							'd' : [1, 2, 4, 3, 4, 2, 1],
 							'e' : [1, 1, 2, 4, 3, 4, 2],
-							'f' : [1, 1, 1, 2, 4, 3, 4],
-							'g' : [1, 1, 1, 1, 2, 4, 3],
+							'f' : [2, 1, 1, 2, 4, 3, 4],
+							'g' : [4, 2, 1, 1, 2, 4, 3],
 							None: [1, 1, 1, 1, 1, 1, 1] }
 
 		random.seed(self.seed)
@@ -46,6 +48,11 @@ class UnrefinedMusicPiece:
 
 			elif (element == "note"):
 				note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'], weights = weightingGuide[prevNotePitch])[0]
+				#assumes keysig is C, applies c as octave high and low depending on previous note
+				if self.keySig[0] == "C" and note == "c":
+					if prevNotePitch in('g', 'a', 'b', 'C'): note = "C" 
+					else: note = "c"
+
 				prevNotePitch = note
 				accidental = "natural" #add different accidentals later
 					

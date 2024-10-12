@@ -15,6 +15,8 @@ class Lilypond:
 	def refine_music_notes(self, noteArray):
 		remainingBeatsInBar = self.timeSig[1]
 		refined_notes_array = []
+		tonic = self.keySig[0].lower()
+		prev_note = None
 
 		for i in range(len(noteArray)):
 			note = self.convert_note(noteArray[i][0])
@@ -24,6 +26,9 @@ class Lilypond:
 			if duration > remainingBeatsInBar:
 				assert("error, notes shouldn't tie over")
 			else:
+				#if note is the tonic, choose high octive or low octive
+				if note == tonic:
+					note = self.select_appropriate_tonic(prev_note, tonic)
 				refined_notes_array.append([note, accidental, self.convert_beat(duration), ""])
 				remainingBeatsInBar -= duration
 				
@@ -31,6 +36,12 @@ class Lilypond:
 				remainingBeatsInBar = self.timeSig[1]
 
 		return refined_notes_array
+	
+	def select_appropriate_tonic(self, prevNote, tonicNote):
+		if prevNote in('g', 'a', 'b'):
+			return tonicNote.upper()
+		else:
+			return tonicNote
 
 	def convert_note(self, note):
 		if note == "rest":
@@ -91,9 +102,14 @@ class Lilypond:
 		return text
 
 	def format_notes(self, noteArray):
-		noteText = noteArray[0] #note
+		noteText = noteArray[0].lower() #note
 		noteText += noteArray[1] #accident
-		if noteArray[0] != 'r': noteText += "\'" #octaveRange for notes(non-changable)
+		if noteArray[0] != 'r': 
+			#octaveRange for notes
+			if noteArray[0].isupper():
+				noteText += "\'\'" 
+			else:
+				noteText += "\'"
 		noteText += noteArray[2] #duration
 		noteText += noteArray[3]
 		noteText += " "
