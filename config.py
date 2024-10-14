@@ -42,5 +42,5 @@ configGenetic = {
 	"populationSize" : 100,
 	"mutationChance" : 1,
 	"terminationNumber" : 100,
-    "terminationQuality" : 0.85
+    "terminationQuality" : 0.95
 }
