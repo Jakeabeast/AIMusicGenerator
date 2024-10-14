@@ -115,3 +115,29 @@ def mutation_crotchet_to_rest(child, noteAmount, idx):
             attempts += 1
             if idx > noteAmount: 
                 idx = 0
+
+def mutation_split_note(child, noteAmount, idx):
+    bool = True
+    attempts = 0
+    while bool and attempts < noteAmount:
+        note = child[idx-1]
+        #don't split crotchets or quavers as they are already small
+        if note[2] != 'quaver'and note[2] != 'crotchet' and note[0] != 'rest':
+            #mutate child here
+            if note[2] == 'minim':
+                note[2] = 'crotchet'
+                child.insert(idx-1, note)
+            if note[2] == 'dottedMinim':
+                note[2] = 'crotchet'
+                placement = random.randint(0,1)
+                child.insert(idx-1+placement, [note[0], note[1], 'minim', note[3]])
+            if note[2] == 'semibreve':
+                note[2] = 'minim'
+                child.insert(idx-1, note)
+            bool = False
+        else:
+            idx += 1
+            attempts += 1
+            if idx > noteAmount: 
+                idx = 0
+# add mutation to combine and split notes

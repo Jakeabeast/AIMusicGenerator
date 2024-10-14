@@ -10,16 +10,24 @@ import copy
 import random
 import numpy as np
 
+DRAW_GRAPHS = False
+
 if __name__ == "__main__":
 	#generate inital sorted population
 	newPopulation = generate_initial_population(configGenetic)
 	newPopulation.sort(key = lambda x: x[1]["overall_score"], reverse=True)
 
+	populationNumber = 1
+
+	#draw graph of initial generation
+	if DRAW_GRAPHS: graph.draw(newPopulation)
+
+
 	unsuccessfulGenerations = 0
 	bestCandidateScore = newPopulation[0][1]["overall_score"]
 
 	#repeat workflow until no improvement is found in newerGenerations
-	while unsuccessfulGenerations < configGenetic["terminationNumber"]:# and bestCandidateScore < configGenetic["terminationQuality"]:
+	while unsuccessfulGenerations < configGenetic["terminationNumber"] and bestCandidateScore < configGenetic["terminationQuality"]:
 		#copy previous population into this generations "oldPopulation"
 		oldPopulation = newPopulation
 		newPopulation = []
@@ -82,6 +90,9 @@ if __name__ == "__main__":
 
 		newPopulation.sort(key = lambda x: x[1]["overall_score"], reverse=True)
 
+
+
+
 		#if there is no improvement to bestCandidate, then new generation is unsuccessful
 		bestNewGenScore = newPopulation[0][1]["overall_score"]
 		if bestCandidateScore == bestNewGenScore :
@@ -89,6 +100,12 @@ if __name__ == "__main__":
 		else: 
 			unsuccessfulGenerations = 0
 			bestCandidateScore = bestNewGenScore 
+		
+		populationNumber += 1
+
+		#draw graph of every 50th generation 
+		if DRAW_GRAPHS and populationNumber % 50 == 0:
+			graph.draw(newPopulation)
 
 	#best Candidate is first item in newPopulation which is sorted by overall_fitness_score
 	bestCandidate = newPopulation[0]
@@ -102,5 +119,6 @@ if __name__ == "__main__":
 		scoreShown = bestCandidate[1]
 		assert("error, likely mutation issue")
 
-	#draw graph of created file
-	graph.draw()
+	#draw graph of final generation
+	if DRAW_GRAPHS: graph.draw(newPopulation)
+	pass
