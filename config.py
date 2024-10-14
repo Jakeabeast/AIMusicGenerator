@@ -17,8 +17,8 @@ configFitness = {
 	"note_rest_ratio" : 0.1, 
 	"note_length_ratio" : [0.85, 0.10, 0.05],
 	"contiguous_melody_shape_ratio" : 0.3,
-	"interval_sizes_allowed" : [0, 1, 2], 
 	"interval_size_ratio" : [0.3, 0.5, 0.2],
+	"interval_sizes_allowed" : [0, 1, 2], 
     "rhythm_complexity": 0.1,
     "harmonic_consistency": 0.1
 }
@@ -37,9 +37,10 @@ terminationNumber : int
 	how many times population is recreated without any improvement to best candidate
 """
 configGenetic = {
-	"numberBars" : 40,
+	"numberBars" : 8,
     "numberElites" : 1,
-	"populationSize" : 50,
+	"populationSize" : 100,
 	"mutationChance" : 1,
-	"terminationNumber" : 5 #100
+	"terminationNumber" : 50, #100,
+    "terminationQuality" : 0.95
 }

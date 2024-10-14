@@ -54,7 +54,7 @@ def uniformCrossOver(parent1, parent2):
  
         barIdx += 1
     return child1Notes, child2Notes
- 
+
 #function mutates a piece of music and adjusts fitness
 def mutatePiece(child):
     noteAmount = len(child)
@@ -65,19 +65,53 @@ def mutatePiece(child):
         if callable(func) and name.startswith('mutation_'):
             allMutations.append(func)
     random.choice(allMutations)(child, noteAmount, idx)
- 
+    return child
+
 def mutation_pitch_change(child, noteAmount, idx):
-    mutationType = random.randint(0, 4)
-    #change note to different pitch
-    if mutationType == 0:
-        bool = True
-        while bool:
-            if child[idx-1][0] != 'rest':
+    bool = True
+    attempts = 0
+    child = child
+    while bool and attempts < noteAmount:
+        if child[idx-1][0] != 'rest':
+            note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
+            while note == child[idx-1][0]:
                 note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
-                while note == child[idx-1][0]:
-                    note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'])[0]
-                bool = False
-            else:
-                idx += 1
-                if idx > noteAmount: 
-                    idx = 0
+            #mutate child here
+            child[idx-1][0] = note
+            bool = False
+        else:
+            idx += 1
+            attempts += 1
+            if idx > noteAmount: 
+                idx = 0
+
+def mutation_rest_to_note(child, noteAmount, idx):
+    bool = True
+    attempts = 0
+    while bool and attempts < noteAmount:
+        if child[idx-1][0] == 'rest':
+            note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g','C'])[0]
+            #mutate child here
+            child[idx-1][0] = note
+            child[idx-1][1] = 'natural'
+            bool = False
+        else:
+            idx += 1
+            attempts += 1
+            if idx > noteAmount: 
+                idx = 0
+
+def mutation_crotchet_to_rest(child, noteAmount, idx):
+    bool = True
+    attempts = 0
+    while bool and attempts < noteAmount:
+        if child[idx-1][2] == 'crotchet' and child[idx-1][0] != 'rest':
+            #mutate child here
+            child[idx-1][0] = 'rest'
+            child[idx-1][1] = ''
+            bool = False
+        else:
+            idx += 1
+            attempts += 1
+            if idx > noteAmount: 
+                idx = 0

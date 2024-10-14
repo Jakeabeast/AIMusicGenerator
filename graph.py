@@ -4,7 +4,7 @@ from music_file import fitness_scores
 
 
 y_axis_range = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-bar_color = ["#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ffa500", "#ffa500", "#3cb371", "#3cb371"]
+bar_color = ["#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ff0000", "#ffa500", "#ffa500", "#3cb371"]
 
 
 def draw():

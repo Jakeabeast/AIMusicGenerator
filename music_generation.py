@@ -37,17 +37,17 @@ class UnrefinedMusicPiece:
 
 		random.seed(self.seed)
 		while remainingSong > 0:
-			element = random.choices(("note", "rest"), weights=(90,10))[0] #weighting on initial population helps gives direction
+			element = random.choices(("note", "rest"), weights=None)[0] #weighting on initial population helps gives direction
 
-			if (element == "rest"):
+			if element == "rest" and remainingBeatsInBar >= 1:
 				note = "rest"
 				prevNotePitch = None
 				accidental = ""
 				duration = ["crotchet", 1] #only quarter rests for now
 
 
-			elif (element == "note"):
-				note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'], weights = weightingGuide[prevNotePitch])[0]
+			else:
+				note = random.choices(['a', 'b', 'c', 'd', 'e', 'f', 'g'], weights = None)[0]
 				#assumes keysig is C, applies c as octave high and low depending on previous note
 				if self.keySig[0] == "C" and note == "c":
 					if prevNotePitch in('g', 'a', 'b', 'C'): note = "C" 
@@ -57,13 +57,13 @@ class UnrefinedMusicPiece:
 				accidental = "natural" #add different accidentals later
 					
 				if remainingBeatsInBar >= 4:
-					duration = random.choices((["semibreve",4],["dottedMinim",3],["minim",2],["crotchet",1],["quaver",0.5]), weights=(6,3,3,85,3))[0]
+					duration = random.choices((["semibreve",4],["dottedMinim",3],["minim",2],["crotchet",1],["quaver",0.5]), weights=None)[0]
 				elif remainingBeatsInBar >= 3:
-					duration = random.choices((["dottedMinim",3],["minim",2],["crotchet",1],["quaver",0.5]), weights=(5,7,84,9))[0]
+					duration = random.choices((["dottedMinim",3],["minim",2],["crotchet",1],["quaver",0.5]), weights=None)[0]
 				elif remainingBeatsInBar >= 2:
-					duration = random.choices((["minim",2],["crotchet",1],["quaver",0.5]), weights=(5,85,10))[0]
+					duration = random.choices((["minim",2],["crotchet",1],["quaver",0.5]), weights=None)[0]
 				elif remainingBeatsInBar >= 1:
-					duration = random.choices((["crotchet",1],["quaver",0.5]), weights=(95,5))[0]
+					duration = random.choices((["crotchet",1],["quaver",0.5]), weights=None)[0]
 				else:
 					duration = ["quaver", 0.5]
 					
